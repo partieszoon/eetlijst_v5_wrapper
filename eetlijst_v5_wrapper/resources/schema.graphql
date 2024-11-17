@@ -1,0 +1,6470 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+type EventAllQueryOutput {
+  id: uuid
+  linked_expenses: [Expense]
+  name: String
+  new: Boolean
+  start_date: timestamptz
+}
+
+type Expense {
+  description: String
+  id: uuid!
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: uuid
+}
+
+"""
+Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'.
+"""
+input Float_comparison_exp {
+  _eq: Float
+  _gt: Float
+  _gte: Float
+  _in: [Float!]
+  _is_null: Boolean
+  _lt: Float
+  _lte: Float
+  _neq: Float
+  _nin: [Float!]
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+type JoinGroupOutput {
+  accepted: Boolean!
+  error: String
+  group_id: String
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+type UserNames {
+  group_name: String
+  names: [String]
+}
+
+scalar bigint
+
+"""
+Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'.
+"""
+input bigint_comparison_exp {
+  _eq: bigint
+  _gt: bigint
+  _gte: bigint
+  _in: [bigint!]
+  _is_null: Boolean
+  _lt: bigint
+  _lte: bigint
+  _neq: bigint
+  _nin: [bigint!]
+}
+
+"""ordering argument of a cursor"""
+enum cursor_ordering {
+  """ascending ordering of the cursor"""
+  ASC
+
+  """descending ordering of the cursor"""
+  DESC
+}
+
+"""
+columns and relationships of "eetschema.app_status"
+"""
+type eetschema_app_status {
+  beta_online: Boolean!
+  created_at: timestamptz!
+  id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.app_status". All fields are combined with a logical 'AND'.
+"""
+input eetschema_app_status_bool_exp {
+  _and: [eetschema_app_status_bool_exp!]
+  _not: eetschema_app_status_bool_exp
+  _or: [eetschema_app_status_bool_exp!]
+  beta_online: Boolean_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""Ordering options when selecting data from "eetschema.app_status"."""
+input eetschema_app_status_order_by {
+  beta_online: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "eetschema.app_status"
+"""
+enum eetschema_app_status_select_column {
+  """column name"""
+  beta_online
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+Streaming cursor of the table "eetschema_app_status"
+"""
+input eetschema_app_status_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_app_status_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_app_status_stream_cursor_value_input {
+  beta_online: Boolean
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+columns and relationships of "eetschema.cook_points_import"
+"""
+type eetschema_cook_points_import {
+  allowed_to_edit: Boolean!
+  cook_points: Float!
+  created_at: timestamptz!
+
+  """An object relationship"""
+  group: eetschema_group!
+  group_id: uuid!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: eetschema_user!
+  user_id: String!
+}
+
+"""
+order by aggregate values of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_aggregate_order_by {
+  avg: eetschema_cook_points_import_avg_order_by
+  count: order_by
+  max: eetschema_cook_points_import_max_order_by
+  min: eetschema_cook_points_import_min_order_by
+  stddev: eetschema_cook_points_import_stddev_order_by
+  stddev_pop: eetschema_cook_points_import_stddev_pop_order_by
+  stddev_samp: eetschema_cook_points_import_stddev_samp_order_by
+  sum: eetschema_cook_points_import_sum_order_by
+  var_pop: eetschema_cook_points_import_var_pop_order_by
+  var_samp: eetschema_cook_points_import_var_samp_order_by
+  variance: eetschema_cook_points_import_variance_order_by
+}
+
+"""
+order by avg() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_avg_order_by {
+  cook_points: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.cook_points_import". All fields are combined with a logical 'AND'.
+"""
+input eetschema_cook_points_import_bool_exp {
+  _and: [eetschema_cook_points_import_bool_exp!]
+  _not: eetschema_cook_points_import_bool_exp
+  _or: [eetschema_cook_points_import_bool_exp!]
+  allowed_to_edit: Boolean_comparison_exp
+  cook_points: Float_comparison_exp
+  created_at: timestamptz_comparison_exp
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.cook_points_import"
+"""
+enum eetschema_cook_points_import_constraint {
+  """
+  unique or primary key constraint on columns "group_id", "user_id"
+  """
+  cook_points_import_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_inc_input {
+  cook_points: Float
+}
+
+"""
+input type for inserting data into table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_insert_input {
+  cook_points: Float
+  group: eetschema_group_obj_rel_insert_input
+  group_id: uuid
+  user_id: String
+}
+
+"""
+order by max() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_max_order_by {
+  cook_points: order_by
+  created_at: order_by
+  group_id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_min_order_by {
+  cook_points: order_by
+  created_at: order_by
+  group_id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.cook_points_import"
+"""
+type eetschema_cook_points_import_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_cook_points_import!]!
+}
+
+"""
+on_conflict condition type for table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_on_conflict {
+  constraint: eetschema_cook_points_import_constraint!
+  update_columns: [eetschema_cook_points_import_update_column!]! = []
+  where: eetschema_cook_points_import_bool_exp
+}
+
+"""
+Ordering options when selecting data from "eetschema.cook_points_import".
+"""
+input eetschema_cook_points_import_order_by {
+  allowed_to_edit: order_by
+  cook_points: order_by
+  created_at: order_by
+  group: eetschema_group_order_by
+  group_id: order_by
+  updated_at: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: eetschema.cook_points_import"""
+input eetschema_cook_points_import_pk_columns_input {
+  group_id: uuid!
+  user_id: String!
+}
+
+"""
+select columns of table "eetschema.cook_points_import"
+"""
+enum eetschema_cook_points_import_select_column {
+  """column name"""
+  allowed_to_edit
+
+  """column name"""
+  cook_points
+
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_set_input {
+  cook_points: Float
+}
+
+"""
+order by stddev() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_stddev_order_by {
+  cook_points: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_stddev_pop_order_by {
+  cook_points: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_stddev_samp_order_by {
+  cook_points: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_cook_points_import"
+"""
+input eetschema_cook_points_import_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_cook_points_import_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_cook_points_import_stream_cursor_value_input {
+  allowed_to_edit: Boolean
+  cook_points: Float
+  created_at: timestamptz
+  group_id: uuid
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by sum() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_sum_order_by {
+  cook_points: order_by
+}
+
+"""
+update columns of table "eetschema.cook_points_import"
+"""
+enum eetschema_cook_points_import_update_column {
+  """column name"""
+  cook_points
+}
+
+input eetschema_cook_points_import_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: eetschema_cook_points_import_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_cook_points_import_set_input
+  where: eetschema_cook_points_import_bool_exp!
+}
+
+"""
+order by var_pop() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_var_pop_order_by {
+  cook_points: order_by
+}
+
+"""
+order by var_samp() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_var_samp_order_by {
+  cook_points: order_by
+}
+
+"""
+order by variance() on columns of table "eetschema.cook_points_import"
+"""
+input eetschema_cook_points_import_variance_order_by {
+  cook_points: order_by
+}
+
+"""
+columns and relationships of "eetschema.event"
+"""
+type eetschema_event {
+  closed_by: String
+  created_at: timestamptz
+  created_by: String
+  description: String
+  end_date: timestamptz!
+
+  """An array relationship"""
+  event_attendees(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_attendees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_attendees_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_attendees_bool_exp
+  ): [eetschema_event_attendees!]!
+  expense_id: uuid
+  group_id: uuid!
+  id: uuid!
+
+  """An array relationship"""
+  linked_expenses(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An aggregate relationship"""
+  linked_expenses_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """An object relationship"""
+  linked_group: eetschema_group!
+  name: String!
+  open: Boolean!
+  start_date: timestamptz!
+  type: String!
+  updated_at: timestamptz
+
+  """An object relationship"""
+  user: eetschema_user
+}
+
+"""
+aggregated selection of "eetschema.event"
+"""
+type eetschema_event_aggregate {
+  aggregate: eetschema_event_aggregate_fields
+  nodes: [eetschema_event!]!
+}
+
+input eetschema_event_aggregate_bool_exp {
+  bool_and: eetschema_event_aggregate_bool_exp_bool_and
+  bool_or: eetschema_event_aggregate_bool_exp_bool_or
+  count: eetschema_event_aggregate_bool_exp_count
+}
+
+input eetschema_event_aggregate_bool_exp_bool_and {
+  arguments: eetschema_event_select_column_eetschema_event_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: eetschema_event_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input eetschema_event_aggregate_bool_exp_bool_or {
+  arguments: eetschema_event_select_column_eetschema_event_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: eetschema_event_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input eetschema_event_aggregate_bool_exp_count {
+  arguments: [eetschema_event_select_column!]
+  distinct: Boolean
+  filter: eetschema_event_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "eetschema.event"
+"""
+type eetschema_event_aggregate_fields {
+  count(columns: [eetschema_event_select_column!], distinct: Boolean): Int!
+  max: eetschema_event_max_fields
+  min: eetschema_event_min_fields
+}
+
+"""
+order by aggregate values of table "eetschema.event"
+"""
+input eetschema_event_aggregate_order_by {
+  count: order_by
+  max: eetschema_event_max_order_by
+  min: eetschema_event_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.event"
+"""
+input eetschema_event_arr_rel_insert_input {
+  data: [eetschema_event_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_event_on_conflict
+}
+
+"""The people whom attend an event"""
+type eetschema_event_attendees {
+  """An object relationship"""
+  attending_user: eetschema_user!
+  comment: String
+  created_at: timestamptz!
+  event_id: uuid!
+
+  """An object relationship"""
+  linked_event: eetschema_event!
+  number_guests: Int!
+  status: String!
+  updated_at: timestamptz!
+  user_id: String!
+
+  """An object relationship"""
+  user_in_group: eetschema_users_in_group
+}
+
+"""
+order by aggregate values of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_aggregate_order_by {
+  avg: eetschema_event_attendees_avg_order_by
+  count: order_by
+  max: eetschema_event_attendees_max_order_by
+  min: eetschema_event_attendees_min_order_by
+  stddev: eetschema_event_attendees_stddev_order_by
+  stddev_pop: eetschema_event_attendees_stddev_pop_order_by
+  stddev_samp: eetschema_event_attendees_stddev_samp_order_by
+  sum: eetschema_event_attendees_sum_order_by
+  var_pop: eetschema_event_attendees_var_pop_order_by
+  var_samp: eetschema_event_attendees_var_samp_order_by
+  variance: eetschema_event_attendees_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_arr_rel_insert_input {
+  data: [eetschema_event_attendees_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_event_attendees_on_conflict
+}
+
+"""
+order by avg() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_avg_order_by {
+  number_guests: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.event_attendees". All fields are combined with a logical 'AND'.
+"""
+input eetschema_event_attendees_bool_exp {
+  _and: [eetschema_event_attendees_bool_exp!]
+  _not: eetschema_event_attendees_bool_exp
+  _or: [eetschema_event_attendees_bool_exp!]
+  attending_user: eetschema_user_bool_exp
+  comment: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  event_id: uuid_comparison_exp
+  linked_event: eetschema_event_bool_exp
+  number_guests: Int_comparison_exp
+  status: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user_id: String_comparison_exp
+  user_in_group: eetschema_users_in_group_bool_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.event_attendees"
+"""
+enum eetschema_event_attendees_constraint {
+  """
+  unique or primary key constraint on columns "event_id", "user_id"
+  """
+  event_attending_members_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_inc_input {
+  number_guests: Int
+}
+
+"""
+input type for inserting data into table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_insert_input {
+  comment: String
+  event_id: uuid
+  linked_event: eetschema_event_obj_rel_insert_input
+  number_guests: Int
+  status: String
+  user_id: String
+  user_in_group: eetschema_users_in_group_obj_rel_insert_input
+}
+
+"""
+order by max() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_max_order_by {
+  comment: order_by
+  created_at: order_by
+  event_id: order_by
+  number_guests: order_by
+  status: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_min_order_by {
+  comment: order_by
+  created_at: order_by
+  event_id: order_by
+  number_guests: order_by
+  status: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.event_attendees"
+"""
+type eetschema_event_attendees_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_event_attendees!]!
+}
+
+"""
+on_conflict condition type for table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_on_conflict {
+  constraint: eetschema_event_attendees_constraint!
+  update_columns: [eetschema_event_attendees_update_column!]! = []
+  where: eetschema_event_attendees_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.event_attendees"."""
+input eetschema_event_attendees_order_by {
+  attending_user: eetschema_user_order_by
+  comment: order_by
+  created_at: order_by
+  event_id: order_by
+  linked_event: eetschema_event_order_by
+  number_guests: order_by
+  status: order_by
+  updated_at: order_by
+  user_id: order_by
+  user_in_group: eetschema_users_in_group_order_by
+}
+
+"""primary key columns input for table: eetschema.event_attendees"""
+input eetschema_event_attendees_pk_columns_input {
+  event_id: uuid!
+  user_id: String!
+}
+
+"""
+select columns of table "eetschema.event_attendees"
+"""
+enum eetschema_event_attendees_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  created_at
+
+  """column name"""
+  event_id
+
+  """column name"""
+  number_guests
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_set_input {
+  comment: String
+  number_guests: Int
+  status: String
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by stddev() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_stddev_order_by {
+  number_guests: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_stddev_pop_order_by {
+  number_guests: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_stddev_samp_order_by {
+  number_guests: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_event_attendees"
+"""
+input eetschema_event_attendees_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_event_attendees_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_event_attendees_stream_cursor_value_input {
+  comment: String
+  created_at: timestamptz
+  event_id: uuid
+  number_guests: Int
+  status: String
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by sum() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_sum_order_by {
+  number_guests: order_by
+}
+
+"""
+update columns of table "eetschema.event_attendees"
+"""
+enum eetschema_event_attendees_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  number_guests
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+input eetschema_event_attendees_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: eetschema_event_attendees_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_event_attendees_set_input
+  where: eetschema_event_attendees_bool_exp!
+}
+
+"""
+order by var_pop() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_var_pop_order_by {
+  number_guests: order_by
+}
+
+"""
+order by var_samp() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_var_samp_order_by {
+  number_guests: order_by
+}
+
+"""
+order by variance() on columns of table "eetschema.event_attendees"
+"""
+input eetschema_event_attendees_variance_order_by {
+  number_guests: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.event". All fields are combined with a logical 'AND'.
+"""
+input eetschema_event_bool_exp {
+  _and: [eetschema_event_bool_exp!]
+  _not: eetschema_event_bool_exp
+  _or: [eetschema_event_bool_exp!]
+  closed_by: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  created_by: String_comparison_exp
+  description: String_comparison_exp
+  end_date: timestamptz_comparison_exp
+  event_attendees: eetschema_event_attendees_bool_exp
+  expense_id: uuid_comparison_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  linked_expenses: eetschema_expense_bool_exp
+  linked_expenses_aggregate: eetschema_expense_aggregate_bool_exp
+  linked_group: eetschema_group_bool_exp
+  name: String_comparison_exp
+  open: Boolean_comparison_exp
+  start_date: timestamptz_comparison_exp
+  type: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: eetschema_user_bool_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.event"
+"""
+enum eetschema_event_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  event_pkey
+}
+
+"""
+input type for inserting data into table "eetschema.event"
+"""
+input eetschema_event_insert_input {
+  closed_by: String
+  created_by: String
+  description: String
+  end_date: timestamptz
+  event_attendees: eetschema_event_attendees_arr_rel_insert_input
+  linked_expenses: eetschema_expense_arr_rel_insert_input
+  linked_group: eetschema_group_obj_rel_insert_input
+  name: String
+  open: Boolean
+  start_date: timestamptz
+  type: String
+}
+
+"""aggregate max on columns"""
+type eetschema_event_max_fields {
+  closed_by: String
+  created_at: timestamptz
+  created_by: String
+  description: String
+  end_date: timestamptz
+  expense_id: uuid
+  group_id: uuid
+  id: uuid
+  name: String
+  start_date: timestamptz
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "eetschema.event"
+"""
+input eetschema_event_max_order_by {
+  closed_by: order_by
+  created_at: order_by
+  created_by: order_by
+  description: order_by
+  end_date: order_by
+  expense_id: order_by
+  group_id: order_by
+  id: order_by
+  name: order_by
+  start_date: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type eetschema_event_min_fields {
+  closed_by: String
+  created_at: timestamptz
+  created_by: String
+  description: String
+  end_date: timestamptz
+  expense_id: uuid
+  group_id: uuid
+  id: uuid
+  name: String
+  start_date: timestamptz
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "eetschema.event"
+"""
+input eetschema_event_min_order_by {
+  closed_by: order_by
+  created_at: order_by
+  created_by: order_by
+  description: order_by
+  end_date: order_by
+  expense_id: order_by
+  group_id: order_by
+  id: order_by
+  name: order_by
+  start_date: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.event"
+"""
+type eetschema_event_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_event!]!
+}
+
+"""
+input type for inserting object relation for remote table "eetschema.event"
+"""
+input eetschema_event_obj_rel_insert_input {
+  data: eetschema_event_insert_input!
+
+  """upsert condition"""
+  on_conflict: eetschema_event_on_conflict
+}
+
+"""
+on_conflict condition type for table "eetschema.event"
+"""
+input eetschema_event_on_conflict {
+  constraint: eetschema_event_constraint!
+  update_columns: [eetschema_event_update_column!]! = []
+  where: eetschema_event_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.event"."""
+input eetschema_event_order_by {
+  closed_by: order_by
+  created_at: order_by
+  created_by: order_by
+  description: order_by
+  end_date: order_by
+  event_attendees_aggregate: eetschema_event_attendees_aggregate_order_by
+  expense_id: order_by
+  group_id: order_by
+  id: order_by
+  linked_expenses_aggregate: eetschema_expense_aggregate_order_by
+  linked_group: eetschema_group_order_by
+  name: order_by
+  open: order_by
+  start_date: order_by
+  type: order_by
+  updated_at: order_by
+  user: eetschema_user_order_by
+}
+
+"""primary key columns input for table: eetschema.event"""
+input eetschema_event_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "eetschema.event"
+"""
+enum eetschema_event_select_column {
+  """column name"""
+  closed_by
+
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  description
+
+  """column name"""
+  end_date
+
+  """column name"""
+  expense_id
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  open
+
+  """column name"""
+  start_date
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
+select "eetschema_event_aggregate_bool_exp_bool_and_arguments_columns" columns of table "eetschema.event"
+"""
+enum eetschema_event_select_column_eetschema_event_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  open
+}
+
+"""
+select "eetschema_event_aggregate_bool_exp_bool_or_arguments_columns" columns of table "eetschema.event"
+"""
+enum eetschema_event_select_column_eetschema_event_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  open
+}
+
+"""
+input type for updating data in table "eetschema.event"
+"""
+input eetschema_event_set_input {
+  closed_by: String
+  description: String
+  end_date: timestamptz
+  name: String
+  open: Boolean
+  start_date: timestamptz
+}
+
+"""
+Streaming cursor of the table "eetschema_event"
+"""
+input eetschema_event_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_event_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_event_stream_cursor_value_input {
+  closed_by: String
+  created_at: timestamptz
+  created_by: String
+  description: String
+  end_date: timestamptz
+  expense_id: uuid
+  group_id: uuid
+  id: uuid
+  name: String
+  open: Boolean
+  start_date: timestamptz
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "eetschema.event"
+"""
+enum eetschema_event_update_column {
+  """column name"""
+  closed_by
+
+  """column name"""
+  description
+
+  """column name"""
+  end_date
+
+  """column name"""
+  name
+
+  """column name"""
+  open
+
+  """column name"""
+  start_date
+}
+
+input eetschema_event_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_event_set_input
+  where: eetschema_event_bool_exp!
+}
+
+"""settlement_expense_id: If this expense was used to settle the list. """
+type eetschema_expense {
+  created_at: timestamptz!
+  deleted: Boolean!
+  description: String!
+  event_id: uuid
+
+  """An array relationship"""
+  expense_distributions(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_distribution_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_distribution_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_distribution_bool_exp
+  ): [eetschema_expense_distribution!]!
+
+  """An object relationship"""
+  group: eetschema_group!
+  group_id: uuid!
+  id: uuid!
+  issued_by: String!
+
+  """An object relationship"""
+  linked_event: eetschema_event
+  payed_amount: Int!
+  payed_at: timestamptz!
+  payed_by: String!
+
+  """An object relationship"""
+  payed_by_user: eetschema_user!
+  settled_id: uuid
+
+  """An object relationship"""
+  settlement: eetschema_settlements
+  settlement_expense_id: uuid
+
+  """An object relationship"""
+  updatedByUser: eetschema_user
+  updated_at: timestamptz!
+  updated_by: String
+
+  """An object relationship"""
+  user: eetschema_user!
+}
+
+"""
+aggregated selection of "eetschema.expense"
+"""
+type eetschema_expense_aggregate {
+  aggregate: eetschema_expense_aggregate_fields
+  nodes: [eetschema_expense!]!
+}
+
+input eetschema_expense_aggregate_bool_exp {
+  bool_and: eetschema_expense_aggregate_bool_exp_bool_and
+  bool_or: eetschema_expense_aggregate_bool_exp_bool_or
+  count: eetschema_expense_aggregate_bool_exp_count
+}
+
+input eetschema_expense_aggregate_bool_exp_bool_and {
+  arguments: eetschema_expense_select_column_eetschema_expense_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: eetschema_expense_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input eetschema_expense_aggregate_bool_exp_bool_or {
+  arguments: eetschema_expense_select_column_eetschema_expense_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: eetschema_expense_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input eetschema_expense_aggregate_bool_exp_count {
+  arguments: [eetschema_expense_select_column!]
+  distinct: Boolean
+  filter: eetschema_expense_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "eetschema.expense"
+"""
+type eetschema_expense_aggregate_fields {
+  avg: eetschema_expense_avg_fields
+  count(columns: [eetschema_expense_select_column!], distinct: Boolean): Int!
+  max: eetschema_expense_max_fields
+  min: eetschema_expense_min_fields
+  stddev: eetschema_expense_stddev_fields
+  stddev_pop: eetschema_expense_stddev_pop_fields
+  stddev_samp: eetschema_expense_stddev_samp_fields
+  sum: eetschema_expense_sum_fields
+  var_pop: eetschema_expense_var_pop_fields
+  var_samp: eetschema_expense_var_samp_fields
+  variance: eetschema_expense_variance_fields
+}
+
+"""
+order by aggregate values of table "eetschema.expense"
+"""
+input eetschema_expense_aggregate_order_by {
+  avg: eetschema_expense_avg_order_by
+  count: order_by
+  max: eetschema_expense_max_order_by
+  min: eetschema_expense_min_order_by
+  stddev: eetschema_expense_stddev_order_by
+  stddev_pop: eetschema_expense_stddev_pop_order_by
+  stddev_samp: eetschema_expense_stddev_samp_order_by
+  sum: eetschema_expense_sum_order_by
+  var_pop: eetschema_expense_var_pop_order_by
+  var_samp: eetschema_expense_var_samp_order_by
+  variance: eetschema_expense_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.expense"
+"""
+input eetschema_expense_arr_rel_insert_input {
+  data: [eetschema_expense_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_expense_on_conflict
+}
+
+"""aggregate avg on columns"""
+type eetschema_expense_avg_fields {
+  payed_amount: Float
+}
+
+"""
+order by avg() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_avg_order_by {
+  payed_amount: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.expense". All fields are combined with a logical 'AND'.
+"""
+input eetschema_expense_bool_exp {
+  _and: [eetschema_expense_bool_exp!]
+  _not: eetschema_expense_bool_exp
+  _or: [eetschema_expense_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  deleted: Boolean_comparison_exp
+  description: String_comparison_exp
+  event_id: uuid_comparison_exp
+  expense_distributions: eetschema_expense_distribution_bool_exp
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  issued_by: String_comparison_exp
+  linked_event: eetschema_event_bool_exp
+  payed_amount: Int_comparison_exp
+  payed_at: timestamptz_comparison_exp
+  payed_by: String_comparison_exp
+  payed_by_user: eetschema_user_bool_exp
+  settled_id: uuid_comparison_exp
+  settlement: eetschema_settlements_bool_exp
+  settlement_expense_id: uuid_comparison_exp
+  updatedByUser: eetschema_user_bool_exp
+  updated_at: timestamptz_comparison_exp
+  updated_by: String_comparison_exp
+  user: eetschema_user_bool_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.expense"
+"""
+enum eetschema_expense_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  expense_pkey
+}
+
+"""distribution of the expenses between users"""
+type eetschema_expense_distribution {
+  count: Int!
+  created_at: timestamptz!
+  expense_id: uuid!
+
+  """An object relationship"""
+  expense_origin: eetschema_expense!
+  id: uuid!
+  payed_amount: Int!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: eetschema_user!
+  user_id: String!
+}
+
+"""
+order by aggregate values of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_aggregate_order_by {
+  avg: eetschema_expense_distribution_avg_order_by
+  count: order_by
+  max: eetschema_expense_distribution_max_order_by
+  min: eetschema_expense_distribution_min_order_by
+  stddev: eetschema_expense_distribution_stddev_order_by
+  stddev_pop: eetschema_expense_distribution_stddev_pop_order_by
+  stddev_samp: eetschema_expense_distribution_stddev_samp_order_by
+  sum: eetschema_expense_distribution_sum_order_by
+  var_pop: eetschema_expense_distribution_var_pop_order_by
+  var_samp: eetschema_expense_distribution_var_samp_order_by
+  variance: eetschema_expense_distribution_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_arr_rel_insert_input {
+  data: [eetschema_expense_distribution_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_expense_distribution_on_conflict
+}
+
+"""
+order by avg() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_avg_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.expense_distribution". All fields are combined with a logical 'AND'.
+"""
+input eetschema_expense_distribution_bool_exp {
+  _and: [eetschema_expense_distribution_bool_exp!]
+  _not: eetschema_expense_distribution_bool_exp
+  _or: [eetschema_expense_distribution_bool_exp!]
+  count: Int_comparison_exp
+  created_at: timestamptz_comparison_exp
+  expense_id: uuid_comparison_exp
+  expense_origin: eetschema_expense_bool_exp
+  id: uuid_comparison_exp
+  payed_amount: Int_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.expense_distribution"
+"""
+enum eetschema_expense_distribution_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  expense_distribution_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_inc_input {
+  count: Int
+  payed_amount: Int
+}
+
+"""
+input type for inserting data into table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_insert_input {
+  count: Int
+  created_at: timestamptz
+  expense_id: uuid
+  expense_origin: eetschema_expense_obj_rel_insert_input
+  id: uuid
+  payed_amount: Int
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by max() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_max_order_by {
+  count: order_by
+  created_at: order_by
+  expense_id: order_by
+  id: order_by
+  payed_amount: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_min_order_by {
+  count: order_by
+  created_at: order_by
+  expense_id: order_by
+  id: order_by
+  payed_amount: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.expense_distribution"
+"""
+type eetschema_expense_distribution_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_expense_distribution!]!
+}
+
+"""
+on_conflict condition type for table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_on_conflict {
+  constraint: eetschema_expense_distribution_constraint!
+  update_columns: [eetschema_expense_distribution_update_column!]! = []
+  where: eetschema_expense_distribution_bool_exp
+}
+
+"""
+Ordering options when selecting data from "eetschema.expense_distribution".
+"""
+input eetschema_expense_distribution_order_by {
+  count: order_by
+  created_at: order_by
+  expense_id: order_by
+  expense_origin: eetschema_expense_order_by
+  id: order_by
+  payed_amount: order_by
+  updated_at: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: eetschema.expense_distribution"""
+input eetschema_expense_distribution_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "eetschema.expense_distribution"
+"""
+enum eetschema_expense_distribution_select_column {
+  """column name"""
+  count
+
+  """column name"""
+  created_at
+
+  """column name"""
+  expense_id
+
+  """column name"""
+  id
+
+  """column name"""
+  payed_amount
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_set_input {
+  count: Int
+  created_at: timestamptz
+  expense_id: uuid
+  id: uuid
+  payed_amount: Int
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by stddev() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_stddev_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_stddev_pop_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_stddev_samp_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_expense_distribution"
+"""
+input eetschema_expense_distribution_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_expense_distribution_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_expense_distribution_stream_cursor_value_input {
+  count: Int
+  created_at: timestamptz
+  expense_id: uuid
+  id: uuid
+  payed_amount: Int
+  updated_at: timestamptz
+  user_id: String
+}
+
+"""
+order by sum() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_sum_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+update columns of table "eetschema.expense_distribution"
+"""
+enum eetschema_expense_distribution_update_column {
+  """column name"""
+  count
+
+  """column name"""
+  created_at
+
+  """column name"""
+  expense_id
+
+  """column name"""
+  id
+
+  """column name"""
+  payed_amount
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+input eetschema_expense_distribution_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: eetschema_expense_distribution_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_expense_distribution_set_input
+  where: eetschema_expense_distribution_bool_exp!
+}
+
+"""
+order by var_pop() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_var_pop_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+order by var_samp() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_var_samp_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+order by variance() on columns of table "eetschema.expense_distribution"
+"""
+input eetschema_expense_distribution_variance_order_by {
+  count: order_by
+  payed_amount: order_by
+}
+
+"""
+columns and relationships of "eetschema.expense_eetlijst_import"
+"""
+type eetschema_expense_eetlijst_import {
+  """An object relationship"""
+  group: eetschema_group!
+  group_id: uuid!
+  payed_amount: Int!
+}
+
+"""
+aggregated selection of "eetschema.expense_eetlijst_import"
+"""
+type eetschema_expense_eetlijst_import_aggregate {
+  aggregate: eetschema_expense_eetlijst_import_aggregate_fields
+  nodes: [eetschema_expense_eetlijst_import!]!
+}
+
+"""
+aggregate fields of "eetschema.expense_eetlijst_import"
+"""
+type eetschema_expense_eetlijst_import_aggregate_fields {
+  avg: eetschema_expense_eetlijst_import_avg_fields
+  count(columns: [eetschema_expense_eetlijst_import_select_column!], distinct: Boolean): Int!
+  max: eetschema_expense_eetlijst_import_max_fields
+  min: eetschema_expense_eetlijst_import_min_fields
+  stddev: eetschema_expense_eetlijst_import_stddev_fields
+  stddev_pop: eetschema_expense_eetlijst_import_stddev_pop_fields
+  stddev_samp: eetschema_expense_eetlijst_import_stddev_samp_fields
+  sum: eetschema_expense_eetlijst_import_sum_fields
+  var_pop: eetschema_expense_eetlijst_import_var_pop_fields
+  var_samp: eetschema_expense_eetlijst_import_var_samp_fields
+  variance: eetschema_expense_eetlijst_import_variance_fields
+}
+
+"""aggregate avg on columns"""
+type eetschema_expense_eetlijst_import_avg_fields {
+  payed_amount: Float
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.expense_eetlijst_import". All fields are combined with a logical 'AND'.
+"""
+input eetschema_expense_eetlijst_import_bool_exp {
+  _and: [eetschema_expense_eetlijst_import_bool_exp!]
+  _not: eetschema_expense_eetlijst_import_bool_exp
+  _or: [eetschema_expense_eetlijst_import_bool_exp!]
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  payed_amount: Int_comparison_exp
+}
+
+"""aggregate max on columns"""
+type eetschema_expense_eetlijst_import_max_fields {
+  group_id: uuid
+  payed_amount: Int
+}
+
+"""aggregate min on columns"""
+type eetschema_expense_eetlijst_import_min_fields {
+  group_id: uuid
+  payed_amount: Int
+}
+
+"""
+Ordering options when selecting data from "eetschema.expense_eetlijst_import".
+"""
+input eetschema_expense_eetlijst_import_order_by {
+  group: eetschema_group_order_by
+  group_id: order_by
+  payed_amount: order_by
+}
+
+"""
+select columns of table "eetschema.expense_eetlijst_import"
+"""
+enum eetschema_expense_eetlijst_import_select_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  payed_amount
+}
+
+"""aggregate stddev on columns"""
+type eetschema_expense_eetlijst_import_stddev_fields {
+  payed_amount: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type eetschema_expense_eetlijst_import_stddev_pop_fields {
+  payed_amount: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type eetschema_expense_eetlijst_import_stddev_samp_fields {
+  payed_amount: Float
+}
+
+"""
+Streaming cursor of the table "eetschema_expense_eetlijst_import"
+"""
+input eetschema_expense_eetlijst_import_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_expense_eetlijst_import_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_expense_eetlijst_import_stream_cursor_value_input {
+  group_id: uuid
+  payed_amount: Int
+}
+
+"""aggregate sum on columns"""
+type eetschema_expense_eetlijst_import_sum_fields {
+  payed_amount: Int
+}
+
+"""aggregate var_pop on columns"""
+type eetschema_expense_eetlijst_import_var_pop_fields {
+  payed_amount: Float
+}
+
+"""aggregate var_samp on columns"""
+type eetschema_expense_eetlijst_import_var_samp_fields {
+  payed_amount: Float
+}
+
+"""aggregate variance on columns"""
+type eetschema_expense_eetlijst_import_variance_fields {
+  payed_amount: Float
+}
+
+"""
+input type for incrementing numeric columns in table "eetschema.expense"
+"""
+input eetschema_expense_inc_input {
+  payed_amount: Int
+}
+
+"""
+input type for inserting data into table "eetschema.expense"
+"""
+input eetschema_expense_insert_input {
+  deleted: Boolean
+  description: String
+  event_id: uuid
+  expense_distributions: eetschema_expense_distribution_arr_rel_insert_input
+  group: eetschema_group_obj_rel_insert_input
+  group_id: uuid
+  linked_event: eetschema_event_obj_rel_insert_input
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: String
+  settlement: eetschema_settlements_obj_rel_insert_input
+  settlement_expense_id: uuid
+  updated_by: String
+}
+
+"""aggregate max on columns"""
+type eetschema_expense_max_fields {
+  created_at: timestamptz
+  description: String
+  event_id: uuid
+  group_id: uuid
+  id: uuid
+  issued_by: String
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: String
+  settled_id: uuid
+  settlement_expense_id: uuid
+  updated_at: timestamptz
+  updated_by: String
+}
+
+"""
+order by max() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_max_order_by {
+  created_at: order_by
+  description: order_by
+  event_id: order_by
+  group_id: order_by
+  id: order_by
+  issued_by: order_by
+  payed_amount: order_by
+  payed_at: order_by
+  payed_by: order_by
+  settled_id: order_by
+  settlement_expense_id: order_by
+  updated_at: order_by
+  updated_by: order_by
+}
+
+"""aggregate min on columns"""
+type eetschema_expense_min_fields {
+  created_at: timestamptz
+  description: String
+  event_id: uuid
+  group_id: uuid
+  id: uuid
+  issued_by: String
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: String
+  settled_id: uuid
+  settlement_expense_id: uuid
+  updated_at: timestamptz
+  updated_by: String
+}
+
+"""
+order by min() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_min_order_by {
+  created_at: order_by
+  description: order_by
+  event_id: order_by
+  group_id: order_by
+  id: order_by
+  issued_by: order_by
+  payed_amount: order_by
+  payed_at: order_by
+  payed_by: order_by
+  settled_id: order_by
+  settlement_expense_id: order_by
+  updated_at: order_by
+  updated_by: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.expense"
+"""
+type eetschema_expense_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_expense!]!
+}
+
+"""
+input type for inserting object relation for remote table "eetschema.expense"
+"""
+input eetschema_expense_obj_rel_insert_input {
+  data: eetschema_expense_insert_input!
+
+  """upsert condition"""
+  on_conflict: eetschema_expense_on_conflict
+}
+
+"""
+on_conflict condition type for table "eetschema.expense"
+"""
+input eetschema_expense_on_conflict {
+  constraint: eetschema_expense_constraint!
+  update_columns: [eetschema_expense_update_column!]! = []
+  where: eetschema_expense_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.expense"."""
+input eetschema_expense_order_by {
+  created_at: order_by
+  deleted: order_by
+  description: order_by
+  event_id: order_by
+  expense_distributions_aggregate: eetschema_expense_distribution_aggregate_order_by
+  group: eetschema_group_order_by
+  group_id: order_by
+  id: order_by
+  issued_by: order_by
+  linked_event: eetschema_event_order_by
+  payed_amount: order_by
+  payed_at: order_by
+  payed_by: order_by
+  payed_by_user: eetschema_user_order_by
+  settled_id: order_by
+  settlement: eetschema_settlements_order_by
+  settlement_expense_id: order_by
+  updatedByUser: eetschema_user_order_by
+  updated_at: order_by
+  updated_by: order_by
+  user: eetschema_user_order_by
+}
+
+"""primary key columns input for table: eetschema.expense"""
+input eetschema_expense_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "eetschema.expense"
+"""
+enum eetschema_expense_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  deleted
+
+  """column name"""
+  description
+
+  """column name"""
+  event_id
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  issued_by
+
+  """column name"""
+  payed_amount
+
+  """column name"""
+  payed_at
+
+  """column name"""
+  payed_by
+
+  """column name"""
+  settled_id
+
+  """column name"""
+  settlement_expense_id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  updated_by
+}
+
+"""
+select "eetschema_expense_aggregate_bool_exp_bool_and_arguments_columns" columns of table "eetschema.expense"
+"""
+enum eetschema_expense_select_column_eetschema_expense_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  deleted
+}
+
+"""
+select "eetschema_expense_aggregate_bool_exp_bool_or_arguments_columns" columns of table "eetschema.expense"
+"""
+enum eetschema_expense_select_column_eetschema_expense_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  deleted
+}
+
+"""
+input type for updating data in table "eetschema.expense"
+"""
+input eetschema_expense_set_input {
+  deleted: Boolean
+  description: String
+  issued_by: String
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: String
+  settled_id: uuid
+  settlement_expense_id: uuid
+  updated_at: timestamptz
+  updated_by: String
+}
+
+"""aggregate stddev on columns"""
+type eetschema_expense_stddev_fields {
+  payed_amount: Float
+}
+
+"""
+order by stddev() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_stddev_order_by {
+  payed_amount: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type eetschema_expense_stddev_pop_fields {
+  payed_amount: Float
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_stddev_pop_order_by {
+  payed_amount: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type eetschema_expense_stddev_samp_fields {
+  payed_amount: Float
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_stddev_samp_order_by {
+  payed_amount: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_expense"
+"""
+input eetschema_expense_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_expense_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_expense_stream_cursor_value_input {
+  created_at: timestamptz
+  deleted: Boolean
+  description: String
+  event_id: uuid
+  group_id: uuid
+  id: uuid
+  issued_by: String
+  payed_amount: Int
+  payed_at: timestamptz
+  payed_by: String
+  settled_id: uuid
+  settlement_expense_id: uuid
+  updated_at: timestamptz
+  updated_by: String
+}
+
+"""aggregate sum on columns"""
+type eetschema_expense_sum_fields {
+  payed_amount: Int
+}
+
+"""
+order by sum() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_sum_order_by {
+  payed_amount: order_by
+}
+
+"""
+update columns of table "eetschema.expense"
+"""
+enum eetschema_expense_update_column {
+  """column name"""
+  deleted
+
+  """column name"""
+  description
+
+  """column name"""
+  issued_by
+
+  """column name"""
+  payed_amount
+
+  """column name"""
+  payed_at
+
+  """column name"""
+  payed_by
+
+  """column name"""
+  settled_id
+
+  """column name"""
+  settlement_expense_id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  updated_by
+}
+
+input eetschema_expense_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: eetschema_expense_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_expense_set_input
+  where: eetschema_expense_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type eetschema_expense_var_pop_fields {
+  payed_amount: Float
+}
+
+"""
+order by var_pop() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_var_pop_order_by {
+  payed_amount: order_by
+}
+
+"""aggregate var_samp on columns"""
+type eetschema_expense_var_samp_fields {
+  payed_amount: Float
+}
+
+"""
+order by var_samp() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_var_samp_order_by {
+  payed_amount: order_by
+}
+
+"""aggregate variance on columns"""
+type eetschema_expense_variance_fields {
+  payed_amount: Float
+}
+
+"""
+order by variance() on columns of table "eetschema.expense"
+"""
+input eetschema_expense_variance_order_by {
+  payed_amount: order_by
+}
+
+"""
+columns and relationships of "eetschema.group"
+"""
+type eetschema_group {
+  active: Boolean!
+  address: String
+  beta: Boolean!
+  city: String
+  created_at: timestamptz!
+  created_at_eetlijst: timestamptz
+  default_status: uuid
+  description: String
+  email: String
+
+  """An array relationship"""
+  events(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): [eetschema_event!]!
+
+  """An aggregate relationship"""
+  events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): eetschema_event_aggregate!
+
+  """An object relationship"""
+  expense_eetlijst_import: eetschema_expense_eetlijst_import
+
+  """An array relationship"""
+  expenses(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An aggregate relationship"""
+  expenses_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+  id: uuid!
+  invite_open: Boolean!
+  invite_uuid: uuid!
+
+  """An array relationship"""
+  lists(
+    """distinct select on columns"""
+    distinct_on: [eetschema_list_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_list_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_list_bool_exp
+  ): [eetschema_list!]!
+  login_name: String
+  name: String!
+  pincode: Int
+
+  """An array relationship"""
+  summary(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_summary_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_summary_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_summary_bool_exp
+  ): [eetschema_group_summary!]!
+  updated_at: timestamptz!
+
+  """An array relationship"""
+  users_in_groups(
+    """distinct select on columns"""
+    distinct_on: [eetschema_users_in_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_users_in_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_users_in_group_bool_exp
+  ): [eetschema_users_in_group!]!
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.group". All fields are combined with a logical 'AND'.
+"""
+input eetschema_group_bool_exp {
+  _and: [eetschema_group_bool_exp!]
+  _not: eetschema_group_bool_exp
+  _or: [eetschema_group_bool_exp!]
+  active: Boolean_comparison_exp
+  address: String_comparison_exp
+  beta: Boolean_comparison_exp
+  city: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  created_at_eetlijst: timestamptz_comparison_exp
+  default_status: uuid_comparison_exp
+  description: String_comparison_exp
+  email: String_comparison_exp
+  events: eetschema_event_bool_exp
+  events_aggregate: eetschema_event_aggregate_bool_exp
+  expense_eetlijst_import: eetschema_expense_eetlijst_import_bool_exp
+  expenses: eetschema_expense_bool_exp
+  expenses_aggregate: eetschema_expense_aggregate_bool_exp
+  id: uuid_comparison_exp
+  invite_open: Boolean_comparison_exp
+  invite_uuid: uuid_comparison_exp
+  lists: eetschema_list_bool_exp
+  login_name: String_comparison_exp
+  name: String_comparison_exp
+  pincode: Int_comparison_exp
+  summary: eetschema_group_summary_bool_exp
+  updated_at: timestamptz_comparison_exp
+  users_in_groups: eetschema_users_in_group_bool_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.group"
+"""
+enum eetschema_group_constraint {
+  """
+  unique or primary key constraint on columns "login_name"
+  """
+  group_login_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  group_pkey
+}
+
+"""
+input type for inserting data into table "eetschema.group"
+"""
+input eetschema_group_insert_input {
+  description: String
+  email: String
+  events: eetschema_event_arr_rel_insert_input
+  expenses: eetschema_expense_arr_rel_insert_input
+  lists: eetschema_list_arr_rel_insert_input
+  name: String
+  users_in_groups: eetschema_users_in_group_arr_rel_insert_input
+}
+
+"""
+columns and relationships of "eetschema.group_invite"
+"""
+type eetschema_group_invite {
+  id: uuid
+  invite_uuid: uuid
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.group_invite". All fields are combined with a logical 'AND'.
+"""
+input eetschema_group_invite_bool_exp {
+  _and: [eetschema_group_invite_bool_exp!]
+  _not: eetschema_group_invite_bool_exp
+  _or: [eetschema_group_invite_bool_exp!]
+  id: uuid_comparison_exp
+  invite_uuid: uuid_comparison_exp
+}
+
+"""Ordering options when selecting data from "eetschema.group_invite"."""
+input eetschema_group_invite_order_by {
+  id: order_by
+  invite_uuid: order_by
+}
+
+"""
+select columns of table "eetschema.group_invite"
+"""
+enum eetschema_group_invite_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  invite_uuid
+}
+
+"""
+Streaming cursor of the table "eetschema_group_invite"
+"""
+input eetschema_group_invite_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_group_invite_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_group_invite_stream_cursor_value_input {
+  id: uuid
+  invite_uuid: uuid
+}
+
+"""
+response of any mutation on the table "eetschema.group"
+"""
+type eetschema_group_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_group!]!
+}
+
+"""
+input type for inserting object relation for remote table "eetschema.group"
+"""
+input eetschema_group_obj_rel_insert_input {
+  data: eetschema_group_insert_input!
+
+  """upsert condition"""
+  on_conflict: eetschema_group_on_conflict
+}
+
+"""
+on_conflict condition type for table "eetschema.group"
+"""
+input eetschema_group_on_conflict {
+  constraint: eetschema_group_constraint!
+  update_columns: [eetschema_group_update_column!]! = []
+  where: eetschema_group_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.group"."""
+input eetschema_group_order_by {
+  active: order_by
+  address: order_by
+  beta: order_by
+  city: order_by
+  created_at: order_by
+  created_at_eetlijst: order_by
+  default_status: order_by
+  description: order_by
+  email: order_by
+  events_aggregate: eetschema_event_aggregate_order_by
+  expense_eetlijst_import: eetschema_expense_eetlijst_import_order_by
+  expenses_aggregate: eetschema_expense_aggregate_order_by
+  id: order_by
+  invite_open: order_by
+  invite_uuid: order_by
+  lists_aggregate: eetschema_list_aggregate_order_by
+  login_name: order_by
+  name: order_by
+  pincode: order_by
+  summary_aggregate: eetschema_group_summary_aggregate_order_by
+  updated_at: order_by
+  users_in_groups_aggregate: eetschema_users_in_group_aggregate_order_by
+}
+
+"""primary key columns input for table: eetschema.group"""
+input eetschema_group_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "eetschema.group"
+"""
+enum eetschema_group_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  address
+
+  """column name"""
+  beta
+
+  """column name"""
+  city
+
+  """column name"""
+  created_at
+
+  """column name"""
+  created_at_eetlijst
+
+  """column name"""
+  default_status
+
+  """column name"""
+  description
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  invite_open
+
+  """column name"""
+  invite_uuid
+
+  """column name"""
+  login_name
+
+  """column name"""
+  name
+
+  """column name"""
+  pincode
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "eetschema.group"
+"""
+input eetschema_group_set_input {
+  beta: Boolean
+  description: String
+  invite_uuid: uuid
+  name: String
+}
+
+"""
+columns and relationships of "eetschema.group_statistics"
+"""
+type eetschema_group_statistics {
+  count: bigint
+  group_id: uuid
+
+  """An object relationship"""
+  linked_group: eetschema_group
+  number_guests: bigint
+  status: String
+
+  """An object relationship"""
+  user: eetschema_user
+  user_id: String
+}
+
+"""
+columns and relationships of "eetschema.group_statistics_2"
+"""
+type eetschema_group_statistics_2 {
+  cook_points: Float
+
+  """An object relationship"""
+  group: eetschema_group
+  group_id: uuid
+  minus_points: bigint
+  num_cooked: numeric
+  num_eat: numeric
+  num_groceries: numeric
+  num_not_attended: numeric
+  number_guests: bigint
+
+  """An object relationship"""
+  user: eetschema_user
+  user_id: String
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.group_statistics_2". All fields are combined with a logical 'AND'.
+"""
+input eetschema_group_statistics_2_bool_exp {
+  _and: [eetschema_group_statistics_2_bool_exp!]
+  _not: eetschema_group_statistics_2_bool_exp
+  _or: [eetschema_group_statistics_2_bool_exp!]
+  cook_points: Float_comparison_exp
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  minus_points: bigint_comparison_exp
+  num_cooked: numeric_comparison_exp
+  num_eat: numeric_comparison_exp
+  num_groceries: numeric_comparison_exp
+  num_not_attended: numeric_comparison_exp
+  number_guests: bigint_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+Ordering options when selecting data from "eetschema.group_statistics_2".
+"""
+input eetschema_group_statistics_2_order_by {
+  cook_points: order_by
+  group: eetschema_group_order_by
+  group_id: order_by
+  minus_points: order_by
+  num_cooked: order_by
+  num_eat: order_by
+  num_groceries: order_by
+  num_not_attended: order_by
+  number_guests: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "eetschema.group_statistics_2"
+"""
+enum eetschema_group_statistics_2_select_column {
+  """column name"""
+  cook_points
+
+  """column name"""
+  group_id
+
+  """column name"""
+  minus_points
+
+  """column name"""
+  num_cooked
+
+  """column name"""
+  num_eat
+
+  """column name"""
+  num_groceries
+
+  """column name"""
+  num_not_attended
+
+  """column name"""
+  number_guests
+
+  """column name"""
+  user_id
+}
+
+"""
+Streaming cursor of the table "eetschema_group_statistics_2"
+"""
+input eetschema_group_statistics_2_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_group_statistics_2_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_group_statistics_2_stream_cursor_value_input {
+  cook_points: Float
+  group_id: uuid
+  minus_points: bigint
+  num_cooked: numeric
+  num_eat: numeric
+  num_groceries: numeric
+  num_not_attended: numeric
+  number_guests: bigint
+  user_id: String
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.group_statistics". All fields are combined with a logical 'AND'.
+"""
+input eetschema_group_statistics_bool_exp {
+  _and: [eetschema_group_statistics_bool_exp!]
+  _not: eetschema_group_statistics_bool_exp
+  _or: [eetschema_group_statistics_bool_exp!]
+  count: bigint_comparison_exp
+  group_id: uuid_comparison_exp
+  linked_group: eetschema_group_bool_exp
+  number_guests: bigint_comparison_exp
+  status: String_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+Ordering options when selecting data from "eetschema.group_statistics".
+"""
+input eetschema_group_statistics_order_by {
+  count: order_by
+  group_id: order_by
+  linked_group: eetschema_group_order_by
+  number_guests: order_by
+  status: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "eetschema.group_statistics"
+"""
+enum eetschema_group_statistics_select_column {
+  """column name"""
+  count
+
+  """column name"""
+  group_id
+
+  """column name"""
+  number_guests
+
+  """column name"""
+  status
+
+  """column name"""
+  user_id
+}
+
+"""
+Streaming cursor of the table "eetschema_group_statistics"
+"""
+input eetschema_group_statistics_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_group_statistics_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_group_statistics_stream_cursor_value_input {
+  count: bigint
+  group_id: uuid
+  number_guests: bigint
+  status: String
+  user_id: String
+}
+
+"""
+Streaming cursor of the table "eetschema_group"
+"""
+input eetschema_group_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_group_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_group_stream_cursor_value_input {
+  active: Boolean
+  address: String
+  beta: Boolean
+  city: String
+  created_at: timestamptz
+  created_at_eetlijst: timestamptz
+  default_status: uuid
+  description: String
+  email: String
+  id: uuid
+  invite_open: Boolean
+  invite_uuid: uuid
+  login_name: String
+  name: String
+  pincode: Int
+  updated_at: timestamptz
+}
+
+"""
+columns and relationships of "eetschema.group_summary"
+"""
+type eetschema_group_summary {
+  """An object relationship"""
+  group: eetschema_group
+  group_id: uuid
+  payed_total: bigint
+
+  """An object relationship"""
+  user: eetschema_user
+  user_id: String
+}
+
+"""
+order by aggregate values of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_aggregate_order_by {
+  avg: eetschema_group_summary_avg_order_by
+  count: order_by
+  max: eetschema_group_summary_max_order_by
+  min: eetschema_group_summary_min_order_by
+  stddev: eetschema_group_summary_stddev_order_by
+  stddev_pop: eetschema_group_summary_stddev_pop_order_by
+  stddev_samp: eetschema_group_summary_stddev_samp_order_by
+  sum: eetschema_group_summary_sum_order_by
+  var_pop: eetschema_group_summary_var_pop_order_by
+  var_samp: eetschema_group_summary_var_samp_order_by
+  variance: eetschema_group_summary_variance_order_by
+}
+
+"""
+order by avg() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_avg_order_by {
+  payed_total: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.group_summary". All fields are combined with a logical 'AND'.
+"""
+input eetschema_group_summary_bool_exp {
+  _and: [eetschema_group_summary_bool_exp!]
+  _not: eetschema_group_summary_bool_exp
+  _or: [eetschema_group_summary_bool_exp!]
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  payed_total: bigint_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+order by max() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_max_order_by {
+  group_id: order_by
+  payed_total: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_min_order_by {
+  group_id: order_by
+  payed_total: order_by
+  user_id: order_by
+}
+
+"""Ordering options when selecting data from "eetschema.group_summary"."""
+input eetschema_group_summary_order_by {
+  group: eetschema_group_order_by
+  group_id: order_by
+  payed_total: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "eetschema.group_summary"
+"""
+enum eetschema_group_summary_select_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  payed_total
+
+  """column name"""
+  user_id
+}
+
+"""
+order by stddev() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_stddev_order_by {
+  payed_total: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_stddev_pop_order_by {
+  payed_total: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_stddev_samp_order_by {
+  payed_total: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_group_summary"
+"""
+input eetschema_group_summary_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_group_summary_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_group_summary_stream_cursor_value_input {
+  group_id: uuid
+  payed_total: bigint
+  user_id: String
+}
+
+"""
+order by sum() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_sum_order_by {
+  payed_total: order_by
+}
+
+"""
+order by var_pop() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_var_pop_order_by {
+  payed_total: order_by
+}
+
+"""
+order by var_samp() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_var_samp_order_by {
+  payed_total: order_by
+}
+
+"""
+order by variance() on columns of table "eetschema.group_summary"
+"""
+input eetschema_group_summary_variance_order_by {
+  payed_total: order_by
+}
+
+"""
+update columns of table "eetschema.group"
+"""
+enum eetschema_group_update_column {
+  """column name"""
+  beta
+
+  """column name"""
+  description
+
+  """column name"""
+  invite_uuid
+
+  """column name"""
+  name
+}
+
+input eetschema_group_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_group_set_input
+  where: eetschema_group_bool_exp!
+}
+
+"""currently this is the grocery list"""
+type eetschema_list {
+  active: Boolean!
+  checked: Boolean!
+  group_id: uuid!
+  id: uuid!
+
+  """An object relationship"""
+  linked_group: eetschema_group!
+  text: String!
+}
+
+"""
+order by aggregate values of table "eetschema.list"
+"""
+input eetschema_list_aggregate_order_by {
+  count: order_by
+  max: eetschema_list_max_order_by
+  min: eetschema_list_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.list"
+"""
+input eetschema_list_arr_rel_insert_input {
+  data: [eetschema_list_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_list_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.list". All fields are combined with a logical 'AND'.
+"""
+input eetschema_list_bool_exp {
+  _and: [eetschema_list_bool_exp!]
+  _not: eetschema_list_bool_exp
+  _or: [eetschema_list_bool_exp!]
+  active: Boolean_comparison_exp
+  checked: Boolean_comparison_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  linked_group: eetschema_group_bool_exp
+  text: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.list"
+"""
+enum eetschema_list_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  list_pkey
+}
+
+"""
+input type for inserting data into table "eetschema.list"
+"""
+input eetschema_list_insert_input {
+  active: Boolean
+  checked: Boolean
+  group_id: uuid
+  linked_group: eetschema_group_obj_rel_insert_input
+  text: String
+}
+
+"""
+order by max() on columns of table "eetschema.list"
+"""
+input eetschema_list_max_order_by {
+  group_id: order_by
+  id: order_by
+  text: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.list"
+"""
+input eetschema_list_min_order_by {
+  group_id: order_by
+  id: order_by
+  text: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.list"
+"""
+type eetschema_list_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_list!]!
+}
+
+"""
+on_conflict condition type for table "eetschema.list"
+"""
+input eetschema_list_on_conflict {
+  constraint: eetschema_list_constraint!
+  update_columns: [eetschema_list_update_column!]! = []
+  where: eetschema_list_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.list"."""
+input eetschema_list_order_by {
+  active: order_by
+  checked: order_by
+  group_id: order_by
+  id: order_by
+  linked_group: eetschema_group_order_by
+  text: order_by
+}
+
+"""primary key columns input for table: eetschema.list"""
+input eetschema_list_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "eetschema.list"
+"""
+enum eetschema_list_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  checked
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  text
+}
+
+"""
+input type for updating data in table "eetschema.list"
+"""
+input eetschema_list_set_input {
+  active: Boolean
+  checked: Boolean
+  group_id: uuid
+  text: String
+}
+
+"""
+Streaming cursor of the table "eetschema_list"
+"""
+input eetschema_list_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_list_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_list_stream_cursor_value_input {
+  active: Boolean
+  checked: Boolean
+  group_id: uuid
+  id: uuid
+  text: String
+}
+
+"""
+update columns of table "eetschema.list"
+"""
+enum eetschema_list_update_column {
+  """column name"""
+  active
+
+  """column name"""
+  checked
+
+  """column name"""
+  group_id
+
+  """column name"""
+  text
+}
+
+input eetschema_list_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_list_set_input
+  where: eetschema_list_bool_exp!
+}
+
+"""send push notifications to a device"""
+type eetschema_notification {
+  Timestamp: timestamptz!
+  body: String!
+  device_token: String!
+  id: uuid!
+  title: String!
+
+  """An object relationship"""
+  user: eetschema_user!
+  user_id: String!
+  wants_to_recieve: Boolean!
+}
+
+"""
+order by aggregate values of table "eetschema.notification"
+"""
+input eetschema_notification_aggregate_order_by {
+  count: order_by
+  max: eetschema_notification_max_order_by
+  min: eetschema_notification_min_order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.notification". All fields are combined with a logical 'AND'.
+"""
+input eetschema_notification_bool_exp {
+  Timestamp: timestamptz_comparison_exp
+  _and: [eetschema_notification_bool_exp!]
+  _not: eetschema_notification_bool_exp
+  _or: [eetschema_notification_bool_exp!]
+  body: String_comparison_exp
+  device_token: String_comparison_exp
+  id: uuid_comparison_exp
+  title: String_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+  wants_to_recieve: Boolean_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.notification"
+"""
+enum eetschema_notification_constraint {
+  """
+  unique or primary key constraint on columns "device_token"
+  """
+  notification_device_token_key
+
+  """
+  unique or primary key constraint on columns "device_token"
+  """
+  notifications_pkey
+}
+
+"""
+input type for inserting data into table "eetschema.notification"
+"""
+input eetschema_notification_insert_input {
+  Timestamp: timestamptz
+  body: String
+  device: String
+  device_token: String
+  id: uuid
+  platform: String
+  title: String
+  user_id: String
+}
+
+"""
+order by max() on columns of table "eetschema.notification"
+"""
+input eetschema_notification_max_order_by {
+  Timestamp: order_by
+  body: order_by
+  device_token: order_by
+  id: order_by
+  title: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.notification"
+"""
+input eetschema_notification_min_order_by {
+  Timestamp: order_by
+  body: order_by
+  device_token: order_by
+  id: order_by
+  title: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.notification"
+"""
+type eetschema_notification_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_notification!]!
+}
+
+"""
+on_conflict condition type for table "eetschema.notification"
+"""
+input eetschema_notification_on_conflict {
+  constraint: eetschema_notification_constraint!
+  update_columns: [eetschema_notification_update_column!]! = []
+  where: eetschema_notification_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.notification"."""
+input eetschema_notification_order_by {
+  Timestamp: order_by
+  body: order_by
+  device_token: order_by
+  id: order_by
+  title: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+  wants_to_recieve: order_by
+}
+
+"""primary key columns input for table: eetschema.notification"""
+input eetschema_notification_pk_columns_input {
+  device_token: String!
+}
+
+"""
+select columns of table "eetschema.notification"
+"""
+enum eetschema_notification_select_column {
+  """column name"""
+  Timestamp
+
+  """column name"""
+  body
+
+  """column name"""
+  device_token
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  user_id
+
+  """column name"""
+  wants_to_recieve
+}
+
+"""
+input type for updating data in table "eetschema.notification"
+"""
+input eetschema_notification_set_input {
+  Timestamp: timestamptz
+  body: String
+  device_token: String
+  id: uuid
+  title: String
+  user_id: String
+  wants_to_recieve: Boolean
+}
+
+"""
+Streaming cursor of the table "eetschema_notification"
+"""
+input eetschema_notification_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_notification_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_notification_stream_cursor_value_input {
+  Timestamp: timestamptz
+  body: String
+  device_token: String
+  id: uuid
+  title: String
+  user_id: String
+  wants_to_recieve: Boolean
+}
+
+"""
+update columns of table "eetschema.notification"
+"""
+enum eetschema_notification_update_column {
+  """column name"""
+  Timestamp
+
+  """column name"""
+  body
+
+  """column name"""
+  device_token
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  user_id
+
+  """column name"""
+  wants_to_recieve
+}
+
+input eetschema_notification_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_notification_set_input
+  where: eetschema_notification_bool_exp!
+}
+
+"""
+columns and relationships of "eetschema.settlements"
+"""
+type eetschema_settlements {
+  created_at: timestamptz!
+  created_by: String!
+
+  """An array relationship"""
+  expenses(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An aggregate relationship"""
+  expenses_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """An object relationship"""
+  group: eetschema_group!
+  group_id: uuid!
+  id: uuid!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: eetschema_user!
+}
+
+"""
+order by aggregate values of table "eetschema.settlements"
+"""
+input eetschema_settlements_aggregate_order_by {
+  count: order_by
+  max: eetschema_settlements_max_order_by
+  min: eetschema_settlements_min_order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.settlements". All fields are combined with a logical 'AND'.
+"""
+input eetschema_settlements_bool_exp {
+  _and: [eetschema_settlements_bool_exp!]
+  _not: eetschema_settlements_bool_exp
+  _or: [eetschema_settlements_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  created_by: String_comparison_exp
+  expenses: eetschema_expense_bool_exp
+  expenses_aggregate: eetschema_expense_aggregate_bool_exp
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: eetschema_user_bool_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.settlements"
+"""
+enum eetschema_settlements_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  settlements_pkey
+}
+
+"""
+input type for inserting data into table "eetschema.settlements"
+"""
+input eetschema_settlements_insert_input {
+  expenses: eetschema_expense_arr_rel_insert_input
+  group: eetschema_group_obj_rel_insert_input
+  group_id: uuid
+}
+
+"""
+order by max() on columns of table "eetschema.settlements"
+"""
+input eetschema_settlements_max_order_by {
+  created_at: order_by
+  created_by: order_by
+  group_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.settlements"
+"""
+input eetschema_settlements_min_order_by {
+  created_at: order_by
+  created_by: order_by
+  group_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.settlements"
+"""
+type eetschema_settlements_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_settlements!]!
+}
+
+"""
+input type for inserting object relation for remote table "eetschema.settlements"
+"""
+input eetschema_settlements_obj_rel_insert_input {
+  data: eetschema_settlements_insert_input!
+
+  """upsert condition"""
+  on_conflict: eetschema_settlements_on_conflict
+}
+
+"""
+on_conflict condition type for table "eetschema.settlements"
+"""
+input eetschema_settlements_on_conflict {
+  constraint: eetschema_settlements_constraint!
+  update_columns: [eetschema_settlements_update_column!]! = []
+  where: eetschema_settlements_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.settlements"."""
+input eetschema_settlements_order_by {
+  created_at: order_by
+  created_by: order_by
+  expenses_aggregate: eetschema_expense_aggregate_order_by
+  group: eetschema_group_order_by
+  group_id: order_by
+  id: order_by
+  updated_at: order_by
+  user: eetschema_user_order_by
+}
+
+"""
+select columns of table "eetschema.settlements"
+"""
+enum eetschema_settlements_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+Streaming cursor of the table "eetschema_settlements"
+"""
+input eetschema_settlements_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_settlements_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_settlements_stream_cursor_value_input {
+  created_at: timestamptz
+  created_by: String
+  group_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+placeholder for update columns of table "eetschema.settlements" (current role has no relevant permissions)
+"""
+enum eetschema_settlements_update_column {
+  """placeholder (do not use)"""
+  _PLACEHOLDER
+}
+
+"""definition of the users"""
+type eetschema_user {
+  alias: String
+
+  """An array relationship"""
+  cook_points_imports(
+    """distinct select on columns"""
+    distinct_on: [eetschema_cook_points_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_cook_points_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_cook_points_import_bool_exp
+  ): [eetschema_cook_points_import!]!
+  email: String
+
+  """An array relationship"""
+  event_attendees(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_attendees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_attendees_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_attendees_bool_exp
+  ): [eetschema_event_attendees!]!
+
+  """An array relationship"""
+  events(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): [eetschema_event!]!
+
+  """An aggregate relationship"""
+  events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): eetschema_event_aggregate!
+
+  """An array relationship"""
+  expense_distributions(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_distribution_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_distribution_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_distribution_bool_exp
+  ): [eetschema_expense_distribution!]!
+
+  """An array relationship"""
+  expenses(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An array relationship"""
+  expensesByPayedBy(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An aggregate relationship"""
+  expensesByPayedBy_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """An array relationship"""
+  expensesByUpdatedBy(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """An aggregate relationship"""
+  expensesByUpdatedBy_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """An aggregate relationship"""
+  expenses_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+  id: String!
+  name: String!
+
+  """An array relationship"""
+  notifications(
+    """distinct select on columns"""
+    distinct_on: [eetschema_notification_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_notification_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_notification_bool_exp
+  ): [eetschema_notification!]!
+  origin: String
+  profile_image: String
+
+  """An array relationship"""
+  settlements(
+    """distinct select on columns"""
+    distinct_on: [eetschema_settlements_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_settlements_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_settlements_bool_exp
+  ): [eetschema_settlements!]!
+
+  """An object relationship"""
+  user_private_info: eetschema_user_private
+
+  """An array relationship"""
+  users_in_groups(
+    """distinct select on columns"""
+    distinct_on: [eetschema_users_in_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_users_in_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_users_in_group_bool_exp
+  ): [eetschema_users_in_group!]!
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.user". All fields are combined with a logical 'AND'.
+"""
+input eetschema_user_bool_exp {
+  _and: [eetschema_user_bool_exp!]
+  _not: eetschema_user_bool_exp
+  _or: [eetschema_user_bool_exp!]
+  alias: String_comparison_exp
+  cook_points_imports: eetschema_cook_points_import_bool_exp
+  email: String_comparison_exp
+  event_attendees: eetschema_event_attendees_bool_exp
+  events: eetschema_event_bool_exp
+  events_aggregate: eetschema_event_aggregate_bool_exp
+  expense_distributions: eetschema_expense_distribution_bool_exp
+  expenses: eetschema_expense_bool_exp
+  expensesByPayedBy: eetschema_expense_bool_exp
+  expensesByPayedBy_aggregate: eetschema_expense_aggregate_bool_exp
+  expensesByUpdatedBy: eetschema_expense_bool_exp
+  expensesByUpdatedBy_aggregate: eetschema_expense_aggregate_bool_exp
+  expenses_aggregate: eetschema_expense_aggregate_bool_exp
+  id: String_comparison_exp
+  name: String_comparison_exp
+  notifications: eetschema_notification_bool_exp
+  origin: String_comparison_exp
+  profile_image: String_comparison_exp
+  settlements: eetschema_settlements_bool_exp
+  user_private_info: eetschema_user_private_bool_exp
+  users_in_groups: eetschema_users_in_group_bool_exp
+}
+
+"""
+response of any mutation on the table "eetschema.user"
+"""
+type eetschema_user_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_user!]!
+}
+
+"""Ordering options when selecting data from "eetschema.user"."""
+input eetschema_user_order_by {
+  alias: order_by
+  cook_points_imports_aggregate: eetschema_cook_points_import_aggregate_order_by
+  email: order_by
+  event_attendees_aggregate: eetschema_event_attendees_aggregate_order_by
+  events_aggregate: eetschema_event_aggregate_order_by
+  expense_distributions_aggregate: eetschema_expense_distribution_aggregate_order_by
+  expensesByPayedBy_aggregate: eetschema_expense_aggregate_order_by
+  expensesByUpdatedBy_aggregate: eetschema_expense_aggregate_order_by
+  expenses_aggregate: eetschema_expense_aggregate_order_by
+  id: order_by
+  name: order_by
+  notifications_aggregate: eetschema_notification_aggregate_order_by
+  origin: order_by
+  profile_image: order_by
+  settlements_aggregate: eetschema_settlements_aggregate_order_by
+  user_private_info: eetschema_user_private_order_by
+  users_in_groups_aggregate: eetschema_users_in_group_aggregate_order_by
+}
+
+"""primary key columns input for table: eetschema.user"""
+input eetschema_user_pk_columns_input {
+  id: String!
+}
+
+"""
+columns and relationships of "eetschema.user_private"
+"""
+type eetschema_user_private {
+  active: Boolean
+  address: String
+  alias: String
+  allergies: String
+  bank_account: String
+  created_at: timestamptz
+  email: String
+  id: String
+  last_seen: timestamptz
+  name: String
+  old_id: String
+  origin: String
+  phone_nr: String
+  profile_image: String
+  updated_at: timestamptz
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.user_private". All fields are combined with a logical 'AND'.
+"""
+input eetschema_user_private_bool_exp {
+  _and: [eetschema_user_private_bool_exp!]
+  _not: eetschema_user_private_bool_exp
+  _or: [eetschema_user_private_bool_exp!]
+  active: Boolean_comparison_exp
+  address: String_comparison_exp
+  alias: String_comparison_exp
+  allergies: String_comparison_exp
+  bank_account: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  id: String_comparison_exp
+  last_seen: timestamptz_comparison_exp
+  name: String_comparison_exp
+  old_id: String_comparison_exp
+  origin: String_comparison_exp
+  phone_nr: String_comparison_exp
+  profile_image: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+input type for inserting data into table "eetschema.user_private"
+"""
+input eetschema_user_private_insert_input {
+  active: Boolean
+  address: String
+  alias: String
+  allergies: String
+  bank_account: String
+  email: String
+  name: String
+  origin: String
+  phone_nr: String
+  profile_image: String
+}
+
+"""
+response of any mutation on the table "eetschema.user_private"
+"""
+type eetschema_user_private_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_user_private!]!
+}
+
+"""Ordering options when selecting data from "eetschema.user_private"."""
+input eetschema_user_private_order_by {
+  active: order_by
+  address: order_by
+  alias: order_by
+  allergies: order_by
+  bank_account: order_by
+  created_at: order_by
+  email: order_by
+  id: order_by
+  last_seen: order_by
+  name: order_by
+  old_id: order_by
+  origin: order_by
+  phone_nr: order_by
+  profile_image: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "eetschema.user_private"
+"""
+enum eetschema_user_private_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  address
+
+  """column name"""
+  alias
+
+  """column name"""
+  allergies
+
+  """column name"""
+  bank_account
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  last_seen
+
+  """column name"""
+  name
+
+  """column name"""
+  old_id
+
+  """column name"""
+  origin
+
+  """column name"""
+  phone_nr
+
+  """column name"""
+  profile_image
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "eetschema.user_private"
+"""
+input eetschema_user_private_set_input {
+  active: Boolean
+  allergies: String
+  name: String
+}
+
+"""
+Streaming cursor of the table "eetschema_user_private"
+"""
+input eetschema_user_private_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_user_private_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_user_private_stream_cursor_value_input {
+  active: Boolean
+  address: String
+  alias: String
+  allergies: String
+  bank_account: String
+  created_at: timestamptz
+  email: String
+  id: String
+  last_seen: timestamptz
+  name: String
+  old_id: String
+  origin: String
+  phone_nr: String
+  profile_image: String
+  updated_at: timestamptz
+}
+
+input eetschema_user_private_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_user_private_set_input
+  where: eetschema_user_private_bool_exp!
+}
+
+"""
+select columns of table "eetschema.user"
+"""
+enum eetschema_user_select_column {
+  """column name"""
+  alias
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  origin
+
+  """column name"""
+  profile_image
+}
+
+"""
+input type for updating data in table "eetschema.user"
+"""
+input eetschema_user_set_input {
+  active: Boolean
+  address: String
+  alias: String
+  allergies: String
+  bank_account: String
+  email: String
+  name: String
+  phone_nr: String
+  profile_image: String
+}
+
+"""
+Streaming cursor of the table "eetschema_user"
+"""
+input eetschema_user_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_user_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_user_stream_cursor_value_input {
+  alias: String
+  email: String
+  id: String
+  name: String
+  origin: String
+  profile_image: String
+}
+
+input eetschema_user_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_user_set_input
+  where: eetschema_user_bool_exp!
+}
+
+"""
+columns and relationships of "eetschema.users_in_group"
+"""
+type eetschema_users_in_group {
+  active: Boolean!
+
+  """An object relationship"""
+  event: eetschema_event
+  event_id: uuid
+
+  """An object relationship"""
+  group: eetschema_group!
+  group_id: uuid!
+  order: Int
+
+  """An object relationship"""
+  user: eetschema_user!
+  user_id: String!
+}
+
+"""
+order by aggregate values of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_aggregate_order_by {
+  avg: eetschema_users_in_group_avg_order_by
+  count: order_by
+  max: eetschema_users_in_group_max_order_by
+  min: eetschema_users_in_group_min_order_by
+  stddev: eetschema_users_in_group_stddev_order_by
+  stddev_pop: eetschema_users_in_group_stddev_pop_order_by
+  stddev_samp: eetschema_users_in_group_stddev_samp_order_by
+  sum: eetschema_users_in_group_sum_order_by
+  var_pop: eetschema_users_in_group_var_pop_order_by
+  var_samp: eetschema_users_in_group_var_samp_order_by
+  variance: eetschema_users_in_group_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_arr_rel_insert_input {
+  data: [eetschema_users_in_group_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: eetschema_users_in_group_on_conflict
+}
+
+"""
+order by avg() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_avg_order_by {
+  order: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "eetschema.users_in_group". All fields are combined with a logical 'AND'.
+"""
+input eetschema_users_in_group_bool_exp {
+  _and: [eetschema_users_in_group_bool_exp!]
+  _not: eetschema_users_in_group_bool_exp
+  _or: [eetschema_users_in_group_bool_exp!]
+  active: Boolean_comparison_exp
+  event: eetschema_event_bool_exp
+  event_id: uuid_comparison_exp
+  group: eetschema_group_bool_exp
+  group_id: uuid_comparison_exp
+  order: Int_comparison_exp
+  user: eetschema_user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "eetschema.users_in_group"
+"""
+enum eetschema_users_in_group_constraint {
+  """
+  unique or primary key constraint on columns "group_id", "user_id"
+  """
+  users_in_group_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_inc_input {
+  order: Int
+}
+
+"""
+input type for inserting data into table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_insert_input {
+  active: Boolean
+  event: eetschema_event_obj_rel_insert_input
+  event_id: uuid
+  group: eetschema_group_obj_rel_insert_input
+  group_id: uuid
+  order: Int
+  user_id: String
+}
+
+"""
+order by max() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_max_order_by {
+  event_id: order_by
+  group_id: order_by
+  order: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_min_order_by {
+  event_id: order_by
+  group_id: order_by
+  order: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "eetschema.users_in_group"
+"""
+type eetschema_users_in_group_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [eetschema_users_in_group!]!
+}
+
+"""
+input type for inserting object relation for remote table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_obj_rel_insert_input {
+  data: eetschema_users_in_group_insert_input!
+
+  """upsert condition"""
+  on_conflict: eetschema_users_in_group_on_conflict
+}
+
+"""
+on_conflict condition type for table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_on_conflict {
+  constraint: eetschema_users_in_group_constraint!
+  update_columns: [eetschema_users_in_group_update_column!]! = []
+  where: eetschema_users_in_group_bool_exp
+}
+
+"""Ordering options when selecting data from "eetschema.users_in_group"."""
+input eetschema_users_in_group_order_by {
+  active: order_by
+  event: eetschema_event_order_by
+  event_id: order_by
+  group: eetschema_group_order_by
+  group_id: order_by
+  order: order_by
+  user: eetschema_user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: eetschema.users_in_group"""
+input eetschema_users_in_group_pk_columns_input {
+  group_id: uuid!
+  user_id: String!
+}
+
+"""
+select columns of table "eetschema.users_in_group"
+"""
+enum eetschema_users_in_group_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  event_id
+
+  """column name"""
+  group_id
+
+  """column name"""
+  order
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_set_input {
+  active: Boolean
+  order: Int
+}
+
+"""
+order by stddev() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_stddev_order_by {
+  order: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_stddev_pop_order_by {
+  order: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_stddev_samp_order_by {
+  order: order_by
+}
+
+"""
+Streaming cursor of the table "eetschema_users_in_group"
+"""
+input eetschema_users_in_group_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: eetschema_users_in_group_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input eetschema_users_in_group_stream_cursor_value_input {
+  active: Boolean
+  event_id: uuid
+  group_id: uuid
+  order: Int
+  user_id: String
+}
+
+"""
+order by sum() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_sum_order_by {
+  order: order_by
+}
+
+"""
+update columns of table "eetschema.users_in_group"
+"""
+enum eetschema_users_in_group_update_column {
+  """column name"""
+  active
+
+  """column name"""
+  order
+}
+
+input eetschema_users_in_group_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: eetschema_users_in_group_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: eetschema_users_in_group_set_input
+  where: eetschema_users_in_group_bool_exp!
+}
+
+"""
+order by var_pop() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_var_pop_order_by {
+  order: order_by
+}
+
+"""
+order by var_samp() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_var_samp_order_by {
+  order: order_by
+}
+
+"""
+order by variance() on columns of table "eetschema.users_in_group"
+"""
+input eetschema_users_in_group_variance_order_by {
+  order: order_by
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "eetschema.expense"
+  """
+  delete_eetschema_expense(
+    """filter the rows which have to be deleted"""
+    where: eetschema_expense_bool_exp!
+  ): eetschema_expense_mutation_response
+
+  """
+  delete single row from the table: "eetschema.expense"
+  """
+  delete_eetschema_expense_by_pk(id: uuid!): eetschema_expense
+
+  """
+  delete data from the table: "eetschema.expense_distribution"
+  """
+  delete_eetschema_expense_distribution(
+    """filter the rows which have to be deleted"""
+    where: eetschema_expense_distribution_bool_exp!
+  ): eetschema_expense_distribution_mutation_response
+
+  """
+  delete single row from the table: "eetschema.expense_distribution"
+  """
+  delete_eetschema_expense_distribution_by_pk(id: uuid!): eetschema_expense_distribution
+
+  """
+  insert data into the table: "eetschema.cook_points_import"
+  """
+  insert_eetschema_cook_points_import(
+    """the rows to be inserted"""
+    objects: [eetschema_cook_points_import_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_cook_points_import_on_conflict
+  ): eetschema_cook_points_import_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.cook_points_import"
+  """
+  insert_eetschema_cook_points_import_one(
+    """the row to be inserted"""
+    object: eetschema_cook_points_import_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_cook_points_import_on_conflict
+  ): eetschema_cook_points_import
+
+  """
+  insert data into the table: "eetschema.event"
+  """
+  insert_eetschema_event(
+    """the rows to be inserted"""
+    objects: [eetschema_event_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_event_on_conflict
+  ): eetschema_event_mutation_response
+
+  """
+  insert data into the table: "eetschema.event_attendees"
+  """
+  insert_eetschema_event_attendees(
+    """the rows to be inserted"""
+    objects: [eetschema_event_attendees_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_event_attendees_on_conflict
+  ): eetschema_event_attendees_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.event_attendees"
+  """
+  insert_eetschema_event_attendees_one(
+    """the row to be inserted"""
+    object: eetschema_event_attendees_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_event_attendees_on_conflict
+  ): eetschema_event_attendees
+
+  """
+  insert a single row into the table: "eetschema.event"
+  """
+  insert_eetschema_event_one(
+    """the row to be inserted"""
+    object: eetschema_event_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_event_on_conflict
+  ): eetschema_event
+
+  """
+  insert data into the table: "eetschema.expense"
+  """
+  insert_eetschema_expense(
+    """the rows to be inserted"""
+    objects: [eetschema_expense_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_expense_on_conflict
+  ): eetschema_expense_mutation_response
+
+  """
+  insert data into the table: "eetschema.expense_distribution"
+  """
+  insert_eetschema_expense_distribution(
+    """the rows to be inserted"""
+    objects: [eetschema_expense_distribution_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_expense_distribution_on_conflict
+  ): eetschema_expense_distribution_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.expense_distribution"
+  """
+  insert_eetschema_expense_distribution_one(
+    """the row to be inserted"""
+    object: eetschema_expense_distribution_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_expense_distribution_on_conflict
+  ): eetschema_expense_distribution
+
+  """
+  insert a single row into the table: "eetschema.expense"
+  """
+  insert_eetschema_expense_one(
+    """the row to be inserted"""
+    object: eetschema_expense_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_expense_on_conflict
+  ): eetschema_expense
+
+  """
+  insert data into the table: "eetschema.group"
+  """
+  insert_eetschema_group(
+    """the rows to be inserted"""
+    objects: [eetschema_group_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_group_on_conflict
+  ): eetschema_group_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.group"
+  """
+  insert_eetschema_group_one(
+    """the row to be inserted"""
+    object: eetschema_group_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_group_on_conflict
+  ): eetschema_group
+
+  """
+  insert data into the table: "eetschema.list"
+  """
+  insert_eetschema_list(
+    """the rows to be inserted"""
+    objects: [eetschema_list_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_list_on_conflict
+  ): eetschema_list_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.list"
+  """
+  insert_eetschema_list_one(
+    """the row to be inserted"""
+    object: eetschema_list_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_list_on_conflict
+  ): eetschema_list
+
+  """
+  insert data into the table: "eetschema.notification"
+  """
+  insert_eetschema_notification(
+    """the rows to be inserted"""
+    objects: [eetschema_notification_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_notification_on_conflict
+  ): eetschema_notification_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.notification"
+  """
+  insert_eetschema_notification_one(
+    """the row to be inserted"""
+    object: eetschema_notification_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_notification_on_conflict
+  ): eetschema_notification
+
+  """
+  insert data into the table: "eetschema.settlements"
+  """
+  insert_eetschema_settlements(
+    """the rows to be inserted"""
+    objects: [eetschema_settlements_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_settlements_on_conflict
+  ): eetschema_settlements_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.settlements"
+  """
+  insert_eetschema_settlements_one(
+    """the row to be inserted"""
+    object: eetschema_settlements_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_settlements_on_conflict
+  ): eetschema_settlements
+
+  """
+  insert data into the table: "eetschema.user_private"
+  """
+  insert_eetschema_user_private(
+    """the rows to be inserted"""
+    objects: [eetschema_user_private_insert_input!]!
+  ): eetschema_user_private_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.user_private"
+  """
+  insert_eetschema_user_private_one(
+    """the row to be inserted"""
+    object: eetschema_user_private_insert_input!
+  ): eetschema_user_private
+
+  """
+  insert data into the table: "eetschema.users_in_group"
+  """
+  insert_eetschema_users_in_group(
+    """the rows to be inserted"""
+    objects: [eetschema_users_in_group_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: eetschema_users_in_group_on_conflict
+  ): eetschema_users_in_group_mutation_response
+
+  """
+  insert a single row into the table: "eetschema.users_in_group"
+  """
+  insert_eetschema_users_in_group_one(
+    """the row to be inserted"""
+    object: eetschema_users_in_group_insert_input!
+
+    """upsert condition"""
+    on_conflict: eetschema_users_in_group_on_conflict
+  ): eetschema_users_in_group
+
+  """joinGroup"""
+  joinGroup(group_id: uuid!, invite_id: uuid!, user_id: String!): JoinGroupOutput
+
+  """
+  update data of the table: "eetschema.cook_points_import"
+  """
+  update_eetschema_cook_points_import(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_cook_points_import_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_cook_points_import_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_cook_points_import_bool_exp!
+  ): eetschema_cook_points_import_mutation_response
+
+  """
+  update single row of the table: "eetschema.cook_points_import"
+  """
+  update_eetschema_cook_points_import_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_cook_points_import_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_cook_points_import_set_input
+    pk_columns: eetschema_cook_points_import_pk_columns_input!
+  ): eetschema_cook_points_import
+
+  """
+  update multiples rows of table: "eetschema.cook_points_import"
+  """
+  update_eetschema_cook_points_import_many(
+    """updates to execute, in order"""
+    updates: [eetschema_cook_points_import_updates!]!
+  ): [eetschema_cook_points_import_mutation_response]
+
+  """
+  update data of the table: "eetschema.event"
+  """
+  update_eetschema_event(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_event_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_event_bool_exp!
+  ): eetschema_event_mutation_response
+
+  """
+  update data of the table: "eetschema.event_attendees"
+  """
+  update_eetschema_event_attendees(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_event_attendees_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_event_attendees_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_event_attendees_bool_exp!
+  ): eetschema_event_attendees_mutation_response
+
+  """
+  update single row of the table: "eetschema.event_attendees"
+  """
+  update_eetschema_event_attendees_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_event_attendees_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_event_attendees_set_input
+    pk_columns: eetschema_event_attendees_pk_columns_input!
+  ): eetschema_event_attendees
+
+  """
+  update multiples rows of table: "eetschema.event_attendees"
+  """
+  update_eetschema_event_attendees_many(
+    """updates to execute, in order"""
+    updates: [eetschema_event_attendees_updates!]!
+  ): [eetschema_event_attendees_mutation_response]
+
+  """
+  update single row of the table: "eetschema.event"
+  """
+  update_eetschema_event_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_event_set_input
+    pk_columns: eetschema_event_pk_columns_input!
+  ): eetschema_event
+
+  """
+  update multiples rows of table: "eetschema.event"
+  """
+  update_eetschema_event_many(
+    """updates to execute, in order"""
+    updates: [eetschema_event_updates!]!
+  ): [eetschema_event_mutation_response]
+
+  """
+  update data of the table: "eetschema.expense"
+  """
+  update_eetschema_expense(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_expense_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_expense_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_expense_bool_exp!
+  ): eetschema_expense_mutation_response
+
+  """
+  update single row of the table: "eetschema.expense"
+  """
+  update_eetschema_expense_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_expense_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_expense_set_input
+    pk_columns: eetschema_expense_pk_columns_input!
+  ): eetschema_expense
+
+  """
+  update data of the table: "eetschema.expense_distribution"
+  """
+  update_eetschema_expense_distribution(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_expense_distribution_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_expense_distribution_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_expense_distribution_bool_exp!
+  ): eetschema_expense_distribution_mutation_response
+
+  """
+  update single row of the table: "eetschema.expense_distribution"
+  """
+  update_eetschema_expense_distribution_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_expense_distribution_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_expense_distribution_set_input
+    pk_columns: eetschema_expense_distribution_pk_columns_input!
+  ): eetschema_expense_distribution
+
+  """
+  update multiples rows of table: "eetschema.expense_distribution"
+  """
+  update_eetschema_expense_distribution_many(
+    """updates to execute, in order"""
+    updates: [eetschema_expense_distribution_updates!]!
+  ): [eetschema_expense_distribution_mutation_response]
+
+  """
+  update multiples rows of table: "eetschema.expense"
+  """
+  update_eetschema_expense_many(
+    """updates to execute, in order"""
+    updates: [eetschema_expense_updates!]!
+  ): [eetschema_expense_mutation_response]
+
+  """
+  update data of the table: "eetschema.group"
+  """
+  update_eetschema_group(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_group_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_group_bool_exp!
+  ): eetschema_group_mutation_response
+
+  """
+  update single row of the table: "eetschema.group"
+  """
+  update_eetschema_group_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_group_set_input
+    pk_columns: eetschema_group_pk_columns_input!
+  ): eetschema_group
+
+  """
+  update multiples rows of table: "eetschema.group"
+  """
+  update_eetschema_group_many(
+    """updates to execute, in order"""
+    updates: [eetschema_group_updates!]!
+  ): [eetschema_group_mutation_response]
+
+  """
+  update data of the table: "eetschema.list"
+  """
+  update_eetschema_list(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_list_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_list_bool_exp!
+  ): eetschema_list_mutation_response
+
+  """
+  update single row of the table: "eetschema.list"
+  """
+  update_eetschema_list_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_list_set_input
+    pk_columns: eetschema_list_pk_columns_input!
+  ): eetschema_list
+
+  """
+  update multiples rows of table: "eetschema.list"
+  """
+  update_eetschema_list_many(
+    """updates to execute, in order"""
+    updates: [eetschema_list_updates!]!
+  ): [eetschema_list_mutation_response]
+
+  """
+  update data of the table: "eetschema.notification"
+  """
+  update_eetschema_notification(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_notification_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_notification_bool_exp!
+  ): eetschema_notification_mutation_response
+
+  """
+  update single row of the table: "eetschema.notification"
+  """
+  update_eetschema_notification_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_notification_set_input
+    pk_columns: eetschema_notification_pk_columns_input!
+  ): eetschema_notification
+
+  """
+  update multiples rows of table: "eetschema.notification"
+  """
+  update_eetschema_notification_many(
+    """updates to execute, in order"""
+    updates: [eetschema_notification_updates!]!
+  ): [eetschema_notification_mutation_response]
+
+  """
+  update data of the table: "eetschema.user"
+  """
+  update_eetschema_user(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_user_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_user_bool_exp!
+  ): eetschema_user_mutation_response
+
+  """
+  update single row of the table: "eetschema.user"
+  """
+  update_eetschema_user_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_user_set_input
+    pk_columns: eetschema_user_pk_columns_input!
+  ): eetschema_user
+
+  """
+  update multiples rows of table: "eetschema.user"
+  """
+  update_eetschema_user_many(
+    """updates to execute, in order"""
+    updates: [eetschema_user_updates!]!
+  ): [eetschema_user_mutation_response]
+
+  """
+  update data of the table: "eetschema.user_private"
+  """
+  update_eetschema_user_private(
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_user_private_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_user_private_bool_exp!
+  ): eetschema_user_private_mutation_response
+
+  """
+  update multiples rows of table: "eetschema.user_private"
+  """
+  update_eetschema_user_private_many(
+    """updates to execute, in order"""
+    updates: [eetschema_user_private_updates!]!
+  ): [eetschema_user_private_mutation_response]
+
+  """
+  update data of the table: "eetschema.users_in_group"
+  """
+  update_eetschema_users_in_group(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_users_in_group_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_users_in_group_set_input
+
+    """filter the rows which have to be updated"""
+    where: eetschema_users_in_group_bool_exp!
+  ): eetschema_users_in_group_mutation_response
+
+  """
+  update single row of the table: "eetschema.users_in_group"
+  """
+  update_eetschema_users_in_group_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: eetschema_users_in_group_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: eetschema_users_in_group_set_input
+    pk_columns: eetschema_users_in_group_pk_columns_input!
+  ): eetschema_users_in_group
+
+  """
+  update multiples rows of table: "eetschema.users_in_group"
+  """
+  update_eetschema_users_in_group_many(
+    """updates to execute, in order"""
+    updates: [eetschema_users_in_group_updates!]!
+  ): [eetschema_users_in_group_mutation_response]
+}
+
+scalar numeric
+
+"""
+Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
+"""
+input numeric_comparison_exp {
+  _eq: numeric
+  _gt: numeric
+  _gte: numeric
+  _in: [numeric!]
+  _is_null: Boolean
+  _lt: numeric
+  _lte: numeric
+  _neq: numeric
+  _nin: [numeric!]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "eetschema.app_status"
+  """
+  eetschema_app_status(
+    """distinct select on columns"""
+    distinct_on: [eetschema_app_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_app_status_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_app_status_bool_exp
+  ): [eetschema_app_status!]!
+
+  """
+  fetch data from the table: "eetschema.app_status" using primary key columns
+  """
+  eetschema_app_status_by_pk(id: uuid!): eetschema_app_status
+
+  """
+  fetch data from the table: "eetschema.cook_points_import"
+  """
+  eetschema_cook_points_import(
+    """distinct select on columns"""
+    distinct_on: [eetschema_cook_points_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_cook_points_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_cook_points_import_bool_exp
+  ): [eetschema_cook_points_import!]!
+
+  """
+  fetch data from the table: "eetschema.cook_points_import" using primary key columns
+  """
+  eetschema_cook_points_import_by_pk(group_id: uuid!, user_id: String!): eetschema_cook_points_import
+
+  """
+  fetch data from the table: "eetschema.event"
+  """
+  eetschema_event(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): [eetschema_event!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.event"
+  """
+  eetschema_event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): eetschema_event_aggregate!
+
+  """
+  fetch data from the table: "eetschema.event_attendees"
+  """
+  eetschema_event_attendees(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_attendees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_attendees_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_attendees_bool_exp
+  ): [eetschema_event_attendees!]!
+
+  """
+  fetch data from the table: "eetschema.event_attendees" using primary key columns
+  """
+  eetschema_event_attendees_by_pk(event_id: uuid!, user_id: String!): eetschema_event_attendees
+
+  """fetch data from the table: "eetschema.event" using primary key columns"""
+  eetschema_event_by_pk(id: uuid!): eetschema_event
+
+  """
+  fetch data from the table: "eetschema.expense"
+  """
+  eetschema_expense(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.expense"
+  """
+  eetschema_expense_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """
+  fetch data from the table: "eetschema.expense" using primary key columns
+  """
+  eetschema_expense_by_pk(id: uuid!): eetschema_expense
+
+  """
+  fetch data from the table: "eetschema.expense_distribution"
+  """
+  eetschema_expense_distribution(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_distribution_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_distribution_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_distribution_bool_exp
+  ): [eetschema_expense_distribution!]!
+
+  """
+  fetch data from the table: "eetschema.expense_distribution" using primary key columns
+  """
+  eetschema_expense_distribution_by_pk(id: uuid!): eetschema_expense_distribution
+
+  """
+  fetch data from the table: "eetschema.expense_eetlijst_import"
+  """
+  eetschema_expense_eetlijst_import(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_eetlijst_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_eetlijst_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_eetlijst_import_bool_exp
+  ): [eetschema_expense_eetlijst_import!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.expense_eetlijst_import"
+  """
+  eetschema_expense_eetlijst_import_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_eetlijst_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_eetlijst_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_eetlijst_import_bool_exp
+  ): eetschema_expense_eetlijst_import_aggregate!
+
+  """
+  fetch data from the table: "eetschema.expense_eetlijst_import" using primary key columns
+  """
+  eetschema_expense_eetlijst_import_by_pk(group_id: uuid!): eetschema_expense_eetlijst_import
+
+  """
+  fetch data from the table: "eetschema.group"
+  """
+  eetschema_group(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_bool_exp
+  ): [eetschema_group!]!
+
+  """fetch data from the table: "eetschema.group" using primary key columns"""
+  eetschema_group_by_pk(id: uuid!): eetschema_group
+
+  """
+  fetch data from the table: "eetschema.group_invite"
+  """
+  eetschema_group_invite(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_invite_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_invite_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_invite_bool_exp
+  ): [eetschema_group_invite!]!
+
+  """
+  fetch data from the table: "eetschema.group_statistics"
+  """
+  eetschema_group_statistics(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_statistics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_statistics_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_bool_exp
+  ): [eetschema_group_statistics!]!
+
+  """
+  fetch data from the table: "eetschema.group_statistics_2"
+  """
+  eetschema_group_statistics_2(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_statistics_2_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_statistics_2_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_2_bool_exp
+  ): [eetschema_group_statistics_2!]!
+
+  """
+  fetch data from the table: "eetschema.group_summary"
+  """
+  eetschema_group_summary(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_summary_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_summary_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_summary_bool_exp
+  ): [eetschema_group_summary!]!
+
+  """
+  fetch data from the table: "eetschema.list"
+  """
+  eetschema_list(
+    """distinct select on columns"""
+    distinct_on: [eetschema_list_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_list_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_list_bool_exp
+  ): [eetschema_list!]!
+
+  """fetch data from the table: "eetschema.list" using primary key columns"""
+  eetschema_list_by_pk(id: uuid!): eetschema_list
+
+  """
+  fetch data from the table: "eetschema.notification"
+  """
+  eetschema_notification(
+    """distinct select on columns"""
+    distinct_on: [eetschema_notification_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_notification_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_notification_bool_exp
+  ): [eetschema_notification!]!
+
+  """
+  fetch data from the table: "eetschema.notification" using primary key columns
+  """
+  eetschema_notification_by_pk(device_token: String!): eetschema_notification
+
+  """
+  fetch data from the table: "eetschema.settlements"
+  """
+  eetschema_settlements(
+    """distinct select on columns"""
+    distinct_on: [eetschema_settlements_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_settlements_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_settlements_bool_exp
+  ): [eetschema_settlements!]!
+
+  """
+  fetch data from the table: "eetschema.settlements" using primary key columns
+  """
+  eetschema_settlements_by_pk(id: uuid!): eetschema_settlements
+
+  """
+  fetch data from the table: "eetschema.user"
+  """
+  eetschema_user(
+    """distinct select on columns"""
+    distinct_on: [eetschema_user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_user_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_user_bool_exp
+  ): [eetschema_user!]!
+
+  """fetch data from the table: "eetschema.user" using primary key columns"""
+  eetschema_user_by_pk(id: String!): eetschema_user
+
+  """
+  fetch data from the table: "eetschema.user_private"
+  """
+  eetschema_user_private(
+    """distinct select on columns"""
+    distinct_on: [eetschema_user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_user_private_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_user_private_bool_exp
+  ): [eetschema_user_private!]!
+
+  """
+  fetch data from the table: "eetschema.users_in_group"
+  """
+  eetschema_users_in_group(
+    """distinct select on columns"""
+    distinct_on: [eetschema_users_in_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_users_in_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_users_in_group_bool_exp
+  ): [eetschema_users_in_group!]!
+
+  """
+  fetch data from the table: "eetschema.users_in_group" using primary key columns
+  """
+  eetschema_users_in_group_by_pk(group_id: uuid!, user_id: String!): eetschema_users_in_group
+
+  """getUsersGroup"""
+  getUsersGroup(group_id: uuid!): UserNames
+
+  """queryTodaysEvents"""
+  queryTodaysEvents(date: String, group_id: uuid!): EventAllQueryOutput
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "eetschema.app_status"
+  """
+  eetschema_app_status(
+    """distinct select on columns"""
+    distinct_on: [eetschema_app_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_app_status_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_app_status_bool_exp
+  ): [eetschema_app_status!]!
+
+  """
+  fetch data from the table: "eetschema.app_status" using primary key columns
+  """
+  eetschema_app_status_by_pk(id: uuid!): eetschema_app_status
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.app_status"
+  """
+  eetschema_app_status_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_app_status_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_app_status_bool_exp
+  ): [eetschema_app_status!]!
+
+  """
+  fetch data from the table: "eetschema.cook_points_import"
+  """
+  eetschema_cook_points_import(
+    """distinct select on columns"""
+    distinct_on: [eetschema_cook_points_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_cook_points_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_cook_points_import_bool_exp
+  ): [eetschema_cook_points_import!]!
+
+  """
+  fetch data from the table: "eetschema.cook_points_import" using primary key columns
+  """
+  eetschema_cook_points_import_by_pk(group_id: uuid!, user_id: String!): eetschema_cook_points_import
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.cook_points_import"
+  """
+  eetschema_cook_points_import_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_cook_points_import_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_cook_points_import_bool_exp
+  ): [eetschema_cook_points_import!]!
+
+  """
+  fetch data from the table: "eetschema.event"
+  """
+  eetschema_event(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): [eetschema_event!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.event"
+  """
+  eetschema_event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): eetschema_event_aggregate!
+
+  """
+  fetch data from the table: "eetschema.event_attendees"
+  """
+  eetschema_event_attendees(
+    """distinct select on columns"""
+    distinct_on: [eetschema_event_attendees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_event_attendees_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_event_attendees_bool_exp
+  ): [eetschema_event_attendees!]!
+
+  """
+  fetch data from the table: "eetschema.event_attendees" using primary key columns
+  """
+  eetschema_event_attendees_by_pk(event_id: uuid!, user_id: String!): eetschema_event_attendees
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.event_attendees"
+  """
+  eetschema_event_attendees_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_event_attendees_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_event_attendees_bool_exp
+  ): [eetschema_event_attendees!]!
+
+  """fetch data from the table: "eetschema.event" using primary key columns"""
+  eetschema_event_by_pk(id: uuid!): eetschema_event
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.event"
+  """
+  eetschema_event_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_event_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_event_bool_exp
+  ): [eetschema_event!]!
+
+  """
+  fetch data from the table: "eetschema.expense"
+  """
+  eetschema_expense(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.expense"
+  """
+  eetschema_expense_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): eetschema_expense_aggregate!
+
+  """
+  fetch data from the table: "eetschema.expense" using primary key columns
+  """
+  eetschema_expense_by_pk(id: uuid!): eetschema_expense
+
+  """
+  fetch data from the table: "eetschema.expense_distribution"
+  """
+  eetschema_expense_distribution(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_distribution_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_distribution_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_distribution_bool_exp
+  ): [eetschema_expense_distribution!]!
+
+  """
+  fetch data from the table: "eetschema.expense_distribution" using primary key columns
+  """
+  eetschema_expense_distribution_by_pk(id: uuid!): eetschema_expense_distribution
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.expense_distribution"
+  """
+  eetschema_expense_distribution_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_expense_distribution_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_expense_distribution_bool_exp
+  ): [eetschema_expense_distribution!]!
+
+  """
+  fetch data from the table: "eetschema.expense_eetlijst_import"
+  """
+  eetschema_expense_eetlijst_import(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_eetlijst_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_eetlijst_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_eetlijst_import_bool_exp
+  ): [eetschema_expense_eetlijst_import!]!
+
+  """
+  fetch aggregated fields from the table: "eetschema.expense_eetlijst_import"
+  """
+  eetschema_expense_eetlijst_import_aggregate(
+    """distinct select on columns"""
+    distinct_on: [eetschema_expense_eetlijst_import_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_expense_eetlijst_import_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_expense_eetlijst_import_bool_exp
+  ): eetschema_expense_eetlijst_import_aggregate!
+
+  """
+  fetch data from the table: "eetschema.expense_eetlijst_import" using primary key columns
+  """
+  eetschema_expense_eetlijst_import_by_pk(group_id: uuid!): eetschema_expense_eetlijst_import
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.expense_eetlijst_import"
+  """
+  eetschema_expense_eetlijst_import_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_expense_eetlijst_import_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_expense_eetlijst_import_bool_exp
+  ): [eetschema_expense_eetlijst_import!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.expense"
+  """
+  eetschema_expense_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_expense_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_expense_bool_exp
+  ): [eetschema_expense!]!
+
+  """
+  fetch data from the table: "eetschema.group"
+  """
+  eetschema_group(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_bool_exp
+  ): [eetschema_group!]!
+
+  """fetch data from the table: "eetschema.group" using primary key columns"""
+  eetschema_group_by_pk(id: uuid!): eetschema_group
+
+  """
+  fetch data from the table: "eetschema.group_invite"
+  """
+  eetschema_group_invite(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_invite_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_invite_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_invite_bool_exp
+  ): [eetschema_group_invite!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.group_invite"
+  """
+  eetschema_group_invite_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_group_invite_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_group_invite_bool_exp
+  ): [eetschema_group_invite!]!
+
+  """
+  fetch data from the table: "eetschema.group_statistics"
+  """
+  eetschema_group_statistics(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_statistics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_statistics_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_bool_exp
+  ): [eetschema_group_statistics!]!
+
+  """
+  fetch data from the table: "eetschema.group_statistics_2"
+  """
+  eetschema_group_statistics_2(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_statistics_2_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_statistics_2_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_2_bool_exp
+  ): [eetschema_group_statistics_2!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.group_statistics_2"
+  """
+  eetschema_group_statistics_2_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_group_statistics_2_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_2_bool_exp
+  ): [eetschema_group_statistics_2!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.group_statistics"
+  """
+  eetschema_group_statistics_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_group_statistics_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_group_statistics_bool_exp
+  ): [eetschema_group_statistics!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.group"
+  """
+  eetschema_group_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_group_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_group_bool_exp
+  ): [eetschema_group!]!
+
+  """
+  fetch data from the table: "eetschema.group_summary"
+  """
+  eetschema_group_summary(
+    """distinct select on columns"""
+    distinct_on: [eetschema_group_summary_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_group_summary_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_group_summary_bool_exp
+  ): [eetschema_group_summary!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.group_summary"
+  """
+  eetschema_group_summary_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_group_summary_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_group_summary_bool_exp
+  ): [eetschema_group_summary!]!
+
+  """
+  fetch data from the table: "eetschema.list"
+  """
+  eetschema_list(
+    """distinct select on columns"""
+    distinct_on: [eetschema_list_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_list_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_list_bool_exp
+  ): [eetschema_list!]!
+
+  """fetch data from the table: "eetschema.list" using primary key columns"""
+  eetschema_list_by_pk(id: uuid!): eetschema_list
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.list"
+  """
+  eetschema_list_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_list_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_list_bool_exp
+  ): [eetschema_list!]!
+
+  """
+  fetch data from the table: "eetschema.notification"
+  """
+  eetschema_notification(
+    """distinct select on columns"""
+    distinct_on: [eetschema_notification_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_notification_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_notification_bool_exp
+  ): [eetschema_notification!]!
+
+  """
+  fetch data from the table: "eetschema.notification" using primary key columns
+  """
+  eetschema_notification_by_pk(device_token: String!): eetschema_notification
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.notification"
+  """
+  eetschema_notification_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_notification_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_notification_bool_exp
+  ): [eetschema_notification!]!
+
+  """
+  fetch data from the table: "eetschema.settlements"
+  """
+  eetschema_settlements(
+    """distinct select on columns"""
+    distinct_on: [eetschema_settlements_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_settlements_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_settlements_bool_exp
+  ): [eetschema_settlements!]!
+
+  """
+  fetch data from the table: "eetschema.settlements" using primary key columns
+  """
+  eetschema_settlements_by_pk(id: uuid!): eetschema_settlements
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.settlements"
+  """
+  eetschema_settlements_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_settlements_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_settlements_bool_exp
+  ): [eetschema_settlements!]!
+
+  """
+  fetch data from the table: "eetschema.user"
+  """
+  eetschema_user(
+    """distinct select on columns"""
+    distinct_on: [eetschema_user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_user_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_user_bool_exp
+  ): [eetschema_user!]!
+
+  """fetch data from the table: "eetschema.user" using primary key columns"""
+  eetschema_user_by_pk(id: String!): eetschema_user
+
+  """
+  fetch data from the table: "eetschema.user_private"
+  """
+  eetschema_user_private(
+    """distinct select on columns"""
+    distinct_on: [eetschema_user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_user_private_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_user_private_bool_exp
+  ): [eetschema_user_private!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.user_private"
+  """
+  eetschema_user_private_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_user_private_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_user_private_bool_exp
+  ): [eetschema_user_private!]!
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.user"
+  """
+  eetschema_user_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_user_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_user_bool_exp
+  ): [eetschema_user!]!
+
+  """
+  fetch data from the table: "eetschema.users_in_group"
+  """
+  eetschema_users_in_group(
+    """distinct select on columns"""
+    distinct_on: [eetschema_users_in_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [eetschema_users_in_group_order_by!]
+
+    """filter the rows returned"""
+    where: eetschema_users_in_group_bool_exp
+  ): [eetschema_users_in_group!]!
+
+  """
+  fetch data from the table: "eetschema.users_in_group" using primary key columns
+  """
+  eetschema_users_in_group_by_pk(group_id: uuid!, user_id: String!): eetschema_users_in_group
+
+  """
+  fetch data from the table in a streaming manner: "eetschema.users_in_group"
+  """
+  eetschema_users_in_group_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [eetschema_users_in_group_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: eetschema_users_in_group_bool_exp
+  ): [eetschema_users_in_group!]!
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}

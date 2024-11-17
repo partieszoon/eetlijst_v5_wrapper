@@ -1,0 +1,13 @@
+query GetLaatstGekookt {
+  eetschema_event_attendees_view(where: {status: {_eq: "cook"}}) {
+    event {
+      start_date
+      id
+    }
+    order
+    user {
+      name
+      id
+    }
+  }
+}

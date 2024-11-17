@@ -1,0 +1,8 @@
+query GetBasicGroupInfo {
+  eetschema_group {
+    name
+    id
+    default_close_time
+    description
+  }
+}

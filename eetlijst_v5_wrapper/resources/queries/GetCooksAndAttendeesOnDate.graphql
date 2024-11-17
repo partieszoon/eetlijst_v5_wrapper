@@ -1,0 +1,22 @@
+fragment event_attenedee_fields on eetschema_event_attendees {
+  status
+  attending_user {
+    id
+    name
+  }
+  updated_at
+  comment
+  number_guests
+}
+
+query GetCooksAndAttendeesOnDate($date: timestamptz) {
+  eetschema_event(where: {start_date: {_eq: $date}}) {
+    id
+    cooks: event_attendees(where: {status: {_eq: "cook"}}) {
+      ...event_attenedee_fields
+    }
+    eat_only: event_attendees(where: {status: {_in: ["eat_only", "got_groceries"]}}) {
+      ...event_attenedee_fields
+    }
+  }
+}

@@ -1,0 +1,45 @@
+fragment event_attenedee_fields on eetschema_event_attendees {
+  status
+  attending_user {
+    id
+    name
+  }
+  updated_at
+  comment
+  number_guests
+}
+
+query GetEetschemaOnDate($date: timestamptz) {
+  eetschema_event(where: { start_date: { _eq: $date } }) {
+    id
+    cooks: event_attendees(where: { status: { _eq: "cook" } }) {
+      ...event_attenedee_fields
+    }
+    not_attending: event_attendees(
+      where: { status: { _eq: "not_attending" } }
+    ) {
+      ...event_attenedee_fields
+    }
+    got_groceries: event_attendees(
+      where: { status: { _eq: "got_groceries" } }
+    ) {
+      ...event_attenedee_fields
+    }
+    eat_only: event_attendees(where: { status: { _eq: "eat_only" } }) {
+      ...event_attenedee_fields
+    }
+    dont_know_yet_or_null: event_attendees(
+      where: { status: { _eq: "dont_know_yet" } }
+    ) {
+      ...event_attenedee_fields
+    }
+    event_attendees_all_users(where: { active: { _eq: true } }) {
+      status
+      number_guests
+      user {
+        id
+        name
+      }
+    }
+  }
+}
