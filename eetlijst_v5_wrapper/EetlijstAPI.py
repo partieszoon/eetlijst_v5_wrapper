@@ -1,7 +1,9 @@
+import re
 import requests
 import json
 import datetime
 from graphql_utils import load_graphql_queries
+from os import environ
 
 DEFAULT_BASE_URL = "https://api.samenn.nl/v1/graphql"
 
@@ -57,13 +59,21 @@ class EetlijstAPI:
         """
         return self.execute_query("GetBasicGroupInfo", self.queries["GetBasicGroupInfo"])
 
-    def execute_query(self, operation: str, query: str, variables: dict = None) -> dict:
+    def getLaatstGekookt(self) -> dict:
+        """Get the last time each user cooked.
+        """
+        res = self.execute_query("GetLaatstGekookt", self.queries["GetLaatstGekookt"])
+        res.sort(key=lambda x: x["order"])
+        return res
+
+    def execute_query(self, operation: str, query: str, variables: dict = None, raw = False) -> dict:
         """
         Executes a GraphQL query on the API.
 
         Args:
             query (str): The GraphQL query string.
             variables (dict, optional): Variables for the query, if any.
+            raw (bool, optional): If True, return the raw response from the API. Defaults to False.
 
         Returns:
             dict: The JSON response from the API.
@@ -74,13 +84,16 @@ class EetlijstAPI:
             "query": query,
             "variables": variables or {}
         }
-        print(payload)
         try:
             response = requests.post(self.base_url, headers=self.headers, json=payload)
             response.raise_for_status()
             res = response.json()
+            if raw:
+                return res
             if res.get("errors"):
                 raise APIError(res["errors"])
+            if len(res) == 1: # if there is only one key in the response, return the value of that key
+                return res["data"][list(res["data"].keys())[0]]
             return res["data"]
         except requests.exceptions.RequestException as e:
             raise APIError(e) # catch, wrap and re-raise the exception. Corporate Programming™ at its finest.
@@ -92,7 +105,7 @@ class APIError(RuntimeError):
 # Example usage:
 if __name__ == "__main__":
     # Your GraphQL API endpoint and Bearer token
-    bearer_token = input("Enter your Bearer token: ")
+    bearer_token = environ.get("EETLIJST_BEARER_TOKEN") or input("Bearer token: ")
 
     # Initialize GraphQL API client
     api_client = EetlijstAPI(bearer_token)
@@ -101,6 +114,7 @@ if __name__ == "__main__":
         api_client.getEetschemaToday(),
         api_client.getCooksAndAttendeesToday(),
         api_client.getBasicGroupInfo(),
+        api_client.getLaatstGekookt()
     ]
 
     for response in responses:
