@@ -1,2 +1,2 @@
-from .EetlijstAPI import GraphQLAPI
+from .EetlijstAPI import EetlijstAPI
 from .graphql_utils import load_graphql_query, load_graphql_queries_from_directory, load_graphql_schema
