@@ -5,10 +5,15 @@ setup(
     version="0.1",
     packages=find_packages(),
     install_requires=[
-        "requests>=2.25.1",  # Include any external dependencies you have
+        "certifi==2024.8.30"
+        "charset-normalizer==3.4.0"
+        "idna==3.10"
+        "requests==2.32.3"
+        "urllib3==2.2.3"
+
     ],
     package_data={
-        'my_graphql_package': [
+        'eetlijst_v5_wrapper': [
             'resources/queries/*.graphql',  # Include all .graphql files in the package
             'resources/schema.graphql',
         ],

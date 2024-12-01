@@ -2,10 +2,79 @@ import re
 import requests
 import json
 import datetime
-from graphql_utils import load_graphql_queries
-from os import environ
+import os
 
 DEFAULT_BASE_URL = "https://api.samenn.nl/v1/graphql"
+
+DEFAULT_QUERIES_DIRECTORY = os.path.join(os.path.dirname(__file__), "resources", "queries")
+
+def load_graphql_query(file_path):
+    """
+    Loads a GraphQL query from a .graphql file.
+
+    Args:
+        file_path (str): The file path to the GraphQL query file.
+
+    Returns:
+        str: The raw GraphQL query string.
+    
+    Raises:
+        FileNotFoundError: If the query file does not exist.
+    """
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"GraphQL query file not found: {file_path}")
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        query = f.read().strip()
+
+    return query
+
+def load_graphql_queries(directory_path = DEFAULT_QUERIES_DIRECTORY):
+    """
+    Loads all GraphQL query files from a given directory.
+
+    Args:
+        directory_path (str): The directory containing the .graphql files.
+
+    Returns:
+        dict: A dictionary where keys are filenames (without extension) and values are the GraphQL queries.
+    
+    Raises:
+        FileNotFoundError: If the directory is not found.
+    """
+    if not os.path.isdir(directory_path):
+        raise FileNotFoundError(f"Directory not found: {directory_path}")
+
+    queries = {}
+    for filename in os.listdir(directory_path):
+        if filename.endswith('.graphql'):
+            query_name = os.path.splitext(filename)[0]
+            file_path = os.path.join(directory_path, filename)
+            query = load_graphql_query(file_path)
+            queries[query_name] = query
+
+    return queries
+
+def load_graphql_schema(file_path):
+    """
+    Loads a GraphQL schema from a .graphql schema file.
+
+    Args:
+        file_path (str): The file path to the GraphQL schema file.
+
+    Returns:
+        str: The raw GraphQL schema string.
+    
+    Raises:
+        FileNotFoundError: If the schema file does not exist.
+    """
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"GraphQL schema file not found: {file_path}")
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        schema = f.read().strip()
+
+    return schema
 
 class EetlijstAPI:
     base_url = DEFAULT_BASE_URL
@@ -105,7 +174,7 @@ class APIError(RuntimeError):
 # Example usage:
 if __name__ == "__main__":
     # Your GraphQL API endpoint and Bearer token
-    bearer_token = environ.get("EETLIJST_BEARER_TOKEN") or input("Bearer token: ")
+    bearer_token = os.environ.get("EETLIJST_BEARER_TOKEN") or input("Bearer token: ")
 
     # Initialize GraphQL API client
     api_client = EetlijstAPI(bearer_token)
