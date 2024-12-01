@@ -161,8 +161,6 @@ class EetlijstAPI:
                 return res
             if res.get("errors"):
                 raise APIError(res["errors"])
-            if len(res) == 1: # if there is only one key in the response, return the value of that key
-                return res["data"][list(res["data"].keys())[0]]
             return res["data"]
         except requests.exceptions.RequestException as e:
             raise APIError(e) # catch, wrap and re-raise the exception. Corporate Programming™ at its finest.
