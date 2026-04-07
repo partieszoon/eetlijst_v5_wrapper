@@ -4,7 +4,7 @@ import json
 import datetime
 import os
 
-DEFAULT_BASE_URL = "https://api.samenn.nl/v1/graphql"
+DEFAULT_BASE_URL = "https://api.eetlijst.nl/v1/graphql"
 
 DEFAULT_QUERIES_DIRECTORY = os.path.join(os.path.dirname(__file__), "resources", "queries")
 
